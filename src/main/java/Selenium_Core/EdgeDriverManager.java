@@ -9,7 +9,7 @@ public class EdgeDriverManager extends DriverManager{
     @Override
     public void createWebDriver(String version) {
         String projectPath=System.getProperty("user.dir");
-        System.setProperty("webdriver.edge.driver",projectPath+"src/main/resources/msedgedriver.exe");
+        System.setProperty("webdriver.edge.driver",projectPath+"/src/main/resources/msedgedriver"+version+".exe");
         EdgeOptions options = new EdgeOptions();
         driver = new EdgeDriver(options);
         driver.manage().window().maximize();

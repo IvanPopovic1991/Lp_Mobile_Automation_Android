@@ -13,4 +13,8 @@ public class BaseFortradeR {
        driverManager = DriverManagerFactory.getDriverManager(browser);
        driver = driverManager.getWebDriver(version);
     }
+
+    public void baseTearDown(){
+        driver.quit();
+    }
 }

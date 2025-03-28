@@ -9,7 +9,7 @@ public class ChromeDriverManager extends DriverManager {
     @Override
     public void createWebDriver(String version) {
         String projectPath = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver", projectPath + "src/main/resources/chromedriver"+version+".exe");
+        System.setProperty("webdriver.chrome.driver", projectPath + "/src/main/resources/chromedriver"+version+".exe");
         String filePath = System.getenv("ChromeExeFilePath");
         ChromeOptions options = new ChromeOptions();
         options.setBinary(filePath);
