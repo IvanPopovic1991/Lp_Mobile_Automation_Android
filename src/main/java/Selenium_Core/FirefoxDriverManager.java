@@ -9,7 +9,7 @@ public class FirefoxDriverManager extends DriverManager {
     @Override
     public void createWebDriver(String version) {
         String projectPath = System.getProperty("user.dir");
-        System.setProperty("webdriver.gecko.driver", projectPath + "src/main/resources/geckodriver"+version+".exe");
+        System.setProperty("webdriver.gecko.driver", projectPath + "/src/main/resources/geckodriver"+version+".exe");
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--start-maximized");
         driver = new FirefoxDriver(options);

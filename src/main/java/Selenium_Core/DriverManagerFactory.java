@@ -6,19 +6,19 @@ public class DriverManagerFactory {
 
         DriverManager driverManager;
         switch (browser) {
-            case "chrome": {
+            case "Chrome": {
                 driverManager = new ChromeDriverManager();
             }
             break;
-            case "firefox": {
+            case "Firefox": {
                 driverManager = new FirefoxDriverManager();
             }
             break;
-            case "edge": {
+            case "Edge": {
                 driverManager = new EdgeDriverManager();
             }
             break;
-            case "opera": {
+            case "Opera": {
                 driverManager = new OperaDriverManager();
             }
             break;
