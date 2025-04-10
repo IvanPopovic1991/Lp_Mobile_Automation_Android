@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="FortradeR landing pages">
-    <test name="Navigate to the browser home page">
+    <test name="FortradeR - successfully demo account registration">
         <classes>
-            <class name="TestsFortradeR.test_Page"/>
+            <class name="TestsFortradeR.pro_Dark_2024_Lp"/>
         </classes>
     </test>
 </suite>

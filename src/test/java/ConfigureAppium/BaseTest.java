@@ -1,17 +1,25 @@
 package ConfigureAppium;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
-    protected AndroidDriver androidDriver;
+
+    protected AppiumDriver driver;
     protected AppiumDriverLocalService service;
 
     public void configureAppium() throws URISyntaxException, MalformedURLException {
@@ -34,11 +42,19 @@ public class BaseTest {
         options.setCapability("chromedriver_autodownload", true);
 
         // Start AndroidDriver
-        androidDriver = new AndroidDriver(new URI("http://127.0.0.1:4723/").toURL(), options);
+        driver = new AndroidDriver(new URI("http://127.0.0.1:4723/").toURL(), options);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
     }
-        // Stop Appium service and driver quit
+
+    public void waitForElement(WebElement element,String value) {
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+               // .until(ExpectedConditions.visibilityOf(element));
+                .until(ExpectedConditions.textToBePresentInElementValue(element,value));
+    }
+
     public void stopAppium() {
-       androidDriver.quit();
-       service.stop();
+        driver.quit();
+        service.stop();
     }
 }
