@@ -5,6 +5,7 @@ import Faker.TestData;
 import Pages.FortradeRPage;
 import Pages.HomePage;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -22,11 +23,15 @@ public class pro_Dark_2024_Lp extends BaseTest {
     public void setup() throws MalformedURLException, URISyntaxException {
         configureAppium();
         driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge");
-        waitForElement(driver.findElement(By.xpath("//input[@id='PhoneCountryCode']")),"0");
+        waitForElement(driver.findElement(By.xpath("//input[@id='PhoneCountryCode']")), "0");
         fortraderPage = new FortradeRPage((AndroidDriver) driver);
     }
+
     @Test
     public void demoAccountRegistration() throws IOException, AWTException {
+
+        //Start recording
+        ((CanRecordScreen) driver).startRecordingScreen();
         fortraderPage.accountRegistration("Testq", "Testa", TestData.emailGenerator(),
                 "381", TestData.numberGenerator(), "25-34", "$50,000-$100,000",
                 "$50,000 – $100,000", "All the above");
@@ -36,6 +41,9 @@ public class pro_Dark_2024_Lp extends BaseTest {
         homePage.clickUsePassBtn();
         homePage.clickMenuBtn();
         homePage.checkRegulation("FSC");
+        //Stop recording
+        String video = ((CanRecordScreen) driver).stopRecordingScreen();
+        BaseTest.saveVideo(video, "Demo account registration - FortradeR");
     }
 
     @AfterMethod
