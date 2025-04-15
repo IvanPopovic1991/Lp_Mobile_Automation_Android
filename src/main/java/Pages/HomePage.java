@@ -77,31 +77,32 @@ public class HomePage extends BasePage {
         switch (regulation) {
             case "FCA": {
                 Assert.assertEquals(actualText, "Broker: Fortrade Ltd. (FCA)");
-                //new BasePage(driver).takeScreenshot("Broker Fortrade Ltd FCA - successfully registered demo account", regulationMsg);
+                new BasePage(driver).takeScreenshot("Broker Fortrade Ltd FCA - successfully registered demo account", regulationMsg);
             }
             break;
             case "cyses": {
                 Assert.assertEquals(actualText, "Broker: Fortrade Cyprus Ltd. (CySec)");
-                //new BasePage(driver).takeScreenshot("Broker Fortrade Cyprus Ltd CySec - successfully registered demo account", regulationMsg);
+                new BasePage(driver).takeScreenshot("Broker Fortrade Cyprus Ltd CySec - successfully registered demo account", regulationMsg);
             }
             break;
             case "Asic": {
                 Assert.assertEquals(actualText, "Broker: Fort Securities Australia Pty Ltd. (ASIC)");
-                //new BasePage(driver).takeScreenshot("Broker Fort Securities Australia Pty Ltd ASIC - successfully registered demo account", regulationMsg);
+                new BasePage(driver).takeScreenshot("Broker Fort Securities Australia Pty Ltd ASIC - successfully registered demo account", regulationMsg);
             }
             break;
             case "iiroc": {
                 Assert.assertEquals(actualText, "Broker: Fortrade Canada Limited (CIRO)");
-                //new BasePage(driver).takeScreenshot("Broker Fortrade Canada Limited CIRO - successfully registered demo account", regulationMsg);
+                new BasePage(driver).takeScreenshot("Broker Fortrade Canada Limited CIRO - successfully registered demo account", regulationMsg);
             }
             break;
             case "FSC":
             default: {
                 Assert.assertEquals(actualText, "Broker: Fortrade (Mauritius) Ltd (FSC)");
-                //new BasePage(driver).takeScreenshot("Broker Fortrade Mauritius Ltd FSC - successfully registered demo account", regulationMsg);
+                new BasePage(driver).takeScreenshot("Broker Fortrade Mauritius Ltd FSC - successfully registered demo account", regulationMsg);
             }
             break;
         }
         System.out.println(regulationMsg.getText());
     }
+
 }

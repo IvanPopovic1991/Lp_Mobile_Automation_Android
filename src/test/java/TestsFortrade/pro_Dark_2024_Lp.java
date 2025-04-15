@@ -5,12 +5,12 @@ import Faker.TestData;
 import Pages.FortradePage;
 import Pages.HomePage;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -32,6 +32,9 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @Parameters({"countryCode", "regulation"})
     @Test
     public void demoAccountRegistration(String countryCode, String regulation) throws IOException, AWTException {
+
+        //Start recording
+        ((CanRecordScreen) driver).startRecordingScreen();
         fortradePage.accountRegistration("Testq", "Testa", TestData.emailGenerator(),
                 countryCode, TestData.numberGenerator(), "25-34", "$50,000-$100,000",
                 "$50,000 – $100,000", "All the above");
@@ -45,6 +48,10 @@ public class pro_Dark_2024_Lp extends BaseTest {
         }
         homePage.clickMenuBtn();
         homePage.checkRegulation(regulation);
+
+        // stop recording
+        String video = ((CanRecordScreen) driver).stopRecordingScreen();
+        BaseTest.saveVideo(video, "Demo account registration " + regulation + " regulation");
     }
 
     @AfterMethod

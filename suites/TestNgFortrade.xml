@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Fortrade landing pages">
+    <listeners>
+        <listener class-name="Listeners.ScreenshotListener"/>
+        <listener class-name="Listeners.Transform"/>
+    </listeners>
     <test name="Fortrade - successfully demo account registration - FSC regulation">
         <parameter name="tag" value="?tg=skip&amp;G_GEO=2051&amp;regulation=FSC"/>
         <parameter name="countryCode" value="381"/>

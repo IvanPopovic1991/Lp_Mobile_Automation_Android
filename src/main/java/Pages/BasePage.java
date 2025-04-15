@@ -3,13 +3,14 @@ package Pages;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 public class BasePage {
@@ -91,5 +92,10 @@ public class BasePage {
             System.out.println("Get text from " + log);
             return element.getText();
         }
+    }
+
+    public void takeScreenshot(String fileName,WebElement element) throws IOException {
+        File file = driver.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(file,new File("src/screenshots/"+fileName+".png"));
     }
 }
