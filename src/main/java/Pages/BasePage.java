@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Objects;
 
 public class BasePage {
 
@@ -22,6 +23,15 @@ public class BasePage {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        String className = this.getClass().getSimpleName();
+        System.out.println(className);
+        if (!className.equals("HomePage") && !className.equals("BasePage")){
+            wait.until(webDriver ->
+            {
+                String value = webDriver.findElement(By.xpath("//input[@class='lcField FlavorRegistration']")).getAttribute("value");
+                return "quick".equals(value) || "hasStages".equals(value);
+            });
+        }
     }
 
     public void clickElement(WebElement element, String log) {
@@ -94,8 +104,25 @@ public class BasePage {
         }
     }
 
+    public String getTextBy(By by, String log) {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            System.out.println("Got text from " + log + " element.");
+            return driver.findElement(by).getText();
+        } catch (StaleElementReferenceException e) {
+            System.out.println("Got text from " + log + " element.");
+            return driver.findElement(by).getText();
+        }
+    }
+
+    public void takeScreenshot(String fileName) throws IOException {
+        File file = driver.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(file,new File("src/screenshots/"+fileName+".png"));
+    }
+
     public void takeScreenshot(String fileName,WebElement element) throws IOException {
         File file = driver.getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(file,new File("src/screenshots/"+fileName+".png"));
     }
+
 }

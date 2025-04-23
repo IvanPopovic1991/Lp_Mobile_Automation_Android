@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 public class FortradeRPage extends BasePage {
 
@@ -60,6 +61,21 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='nav-button']")
     protected WebElement startTradingBtn;
 
+    @FindBy(xpath = "//input[@name='Token0']")
+    protected WebElement tokenField0;
+
+    @FindBy(xpath = "//input[@name='Token1']")
+    protected WebElement tokenField1;
+
+    @FindBy(xpath = "//input[@name='Token2']")
+    protected WebElement tokenField2;
+
+    @FindBy(xpath = "//input[@name='Token3']")
+    protected WebElement tokenField3;
+
+    @FindBy(xpath = "//div[@class='formErrorMessage']")
+    public WebElement incorrectTokenMsg;
+
     protected By privacyPolicyLinkBy = By.xpath("//span[@class='MarketingMaterials2']//span[@class='fscClass']//a[text()='Privacy Policy']");
 
     protected By termsAndConditionsLinkBy = By.xpath("//span[@class='MarketingMaterials2']//span[@class='fscClass']//a[text()=' Terms and Conditions']");
@@ -95,6 +111,9 @@ public class FortradeRPage extends BasePage {
     protected By cysecRegulationLinkBy = By.xpath("//a[text()='CIF license number 385/20']");
 
     protected By fscRegulationLinkBy = By.xpath("//a[text()=' GB21026472']");
+
+    private String expTextForPopUp = "Invalid email. Please try another or proceed to log in. If needed, reset your password in case it's forgotten.";
+
 
     String[] errorMessages = {"Please enter all your given first name(s)",
             "Please enter your last name in alphabetic characters",
@@ -190,6 +209,101 @@ public class FortradeRPage extends BasePage {
         selectSaving(savingData);
         selectKnowledge(knowledgeData);
         clickContinueBtn();
+    }
+
+    public void unsuccessfullyRegistrationWrongData(String firstNameData, String lastNameData, String emailData, String countryCodeData,
+                                                    String phoneData){
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneData);
+        closeKeyboard();
+        clickSubmitBtn();
+    }
+
+    public void assertErrorMessages() {
+        for (int i = 1; i <= 4; i++) {
+            Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidationIn'])[position()=number]".replace("number", String.valueOf(i))), "error message " + errorMessages[i - 1]), errorMessages[i - 1]);
+        }
+    }
+
+    public void assertSameNameErrorMsg() {
+        for (int i = 1; i <= 2; i++) {
+            Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidationIn'])[position()=number]".replace("number", String.valueOf(i))), "Error message : " + sameNamesErrorMessages[i - 1]), sameNamesErrorMessages[i - 1]);
+        }
+    }
+
+    public void assertColor(String color) {
+        WebElement[] fields = {firstName, lastName, email, countryCode, phoneNumber};
+        for (int i = 0; i < fields.length; i++) {
+            /**
+             * Ako prosledis color vrednost kao "rgb(123, 123, 132)" onda ukljuci ovaj kod
+             */
+            /*System.out.println("This is the border color: " + fields[i].getCssValue("border-color"));
+            Assert.assertEquals(fields[i].getCssValue("border-color"), color);*/
+            /**
+             * U suprotnom ako uneses vrednost kao "blue" onda ukljuci ovaj kod
+             */
+            String borderColor = fields[i].getCssValue("border-color");
+            // Split the RGB value
+            String[] rgbValues = borderColor.replace("rgb(", "").replace(")", "").split(",");
+            int red = Integer.parseInt(rgbValues[0].trim());
+            int green = Integer.parseInt(rgbValues[1].trim());
+            int blue = Integer.parseInt(rgbValues[2].trim());
+            // Assert if it has a 'red' tone (adjust threshold values as needed)
+            if (color.equalsIgnoreCase("red")) {
+                System.out.println("This is the border color of " + fields[i].getAttribute("name") + " field: " + borderColor);
+                Assert.assertTrue(red > 150 && green < 100 && blue < 100, "Border color is not approximately red.");
+            } else if (color.equalsIgnoreCase("blue")) {
+                System.out.println("This is the border color of " + fields[i].getAttribute("name") + " field: " + borderColor);
+                Assert.assertTrue(blue > 200 && green > 100 && red < 50, "Border color is not approximately blue.");
+            } else if (color.equalsIgnoreCase("green")) {
+                System.out.println("This is the border color of " + fields[i].getAttribute("name") + "field: " + borderColor);
+                Assert.assertTrue(green < 200 && red > 50 && red < 120 && blue > 50 && blue < 100, "Border color is not approximately green.");
+            }
+        }
+    }
+
+    public void incorrectToken(String token0, String token1, String token2, String token3) {
+        typeText(tokenField0, token0, "first token input field");
+        typeText(tokenField1, token1, "second token input field");
+        typeText(tokenField2, token2, "third token input field");
+        typeText(tokenField3, token3, "fourth token input field");
+    }
+
+    public void unsuccessfullyRegistrationWrongSMS(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String ageData, String annualData, String savingData, String knowledgeData,String tokenField0Value
+            , String tokenField1Value, String tokenField2Value,String tokenField3Value) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectAge(ageData);
+        selectAnnual(annualData);
+        selectSaving(savingData);
+        selectKnowledge(knowledgeData);
+        incorrectToken(tokenField0Value,tokenField1Value,tokenField2Value,tokenField3Value);
+        closeKeyboard();
+        clickContinueBtn();
+    }
+
+    public void firstStepWidget(String firstNameData, String lastNameData, String emailData, String countryCodeData,
+                                String phoneData){
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneData);
+        closeKeyboard();
+        clickSubmitBtn();
+    }
+
+    public void assertPopUpAlreadyRegisteredAccount(){
+        Assert.assertEquals(getText(alrdRegEmailPopUp, "alrdRegEmailPopUp"), expTextForPopUp);
     }
 
 }
