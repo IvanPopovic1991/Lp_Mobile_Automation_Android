@@ -8,6 +8,7 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
