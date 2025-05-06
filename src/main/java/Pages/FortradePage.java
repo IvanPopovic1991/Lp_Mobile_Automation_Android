@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.awt.*;
@@ -359,6 +360,62 @@ public class FortradePage extends BasePage {
 
     public void assertPopUpAlreadyRegisteredAccount(){
         Assert.assertEquals(getText(alrdRegEmailPopUp, "alrdRegEmailPopUp"), expTextForPopUp);
+    }
+
+    public void ageParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String ageData) {
+        clickDenyBtn();
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectAge(ageData);
+        clickContinueBtn();
+    }
+
+    public void annualParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String annualData) {
+        clickDenyBtn();
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectAnnual(annualData);
+        clickContinueBtn();
+    }
+
+    public void savingParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String savingData) {
+        clickDenyBtn();
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectSaving(savingData);
+        clickContinueBtn();
+    }
+
+    public void knowledgeParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String knowledgeData) {
+        clickDenyBtn();
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectKnowledge(knowledgeData);
+        clickContinueBtn();
     }
 
 }

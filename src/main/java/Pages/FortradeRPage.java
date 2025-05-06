@@ -306,4 +306,56 @@ public class FortradeRPage extends BasePage {
         Assert.assertEquals(getText(alrdRegEmailPopUp, "alrdRegEmailPopUp"), expTextForPopUp);
     }
 
+    public void ageParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String ageData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectAge(ageData);
+        clickContinueBtn();
+    }
+
+    public void annualParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String annualData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectAnnual(annualData);
+        clickContinueBtn();
+    }
+
+    public void savingParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String savingData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectSaving(savingData);
+        clickContinueBtn();
+    }
+
+    public void knowledgeParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String knowledgeData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectKnowledge(knowledgeData);
+        clickContinueBtn();
+    }
+
 }
