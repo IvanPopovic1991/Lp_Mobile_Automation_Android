@@ -7,7 +7,15 @@
     </listeners>
     <test name="FortradeR - successfully demo account registration">
         <classes>
-            <class name="TestsFortradeR.pro_Dark_2024_Lp"/>
+            <class name="TestsFortradeR.pro_Dark_2024_Lp">
+                <methods>
+                    <include name="checkingTagsInTheCrm"/>
+                    <include name="checkingAgeParameter"/>
+                    <include name="checkingAnnualParameter"/>
+                    <include name="checkingSavingParameter"/>
+                    <include name="checkingKnowledgeParameter"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
