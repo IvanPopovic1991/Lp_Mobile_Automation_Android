@@ -9,7 +9,7 @@
         <classes>
             <class name="TestsFortradeR.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="emailIsReceivedSuccessfully"/>
+                    <include name="checkFscRedirection"/>
                 </methods>
             </class>
         </classes>

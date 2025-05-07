@@ -9,10 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.Objects;
+import java.util.Set;
 
 public class BasePage {
 
@@ -25,7 +26,7 @@ public class BasePage {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
         String className = this.getClass().getSimpleName();
         System.out.println(className);
-        if (!className.equals("HomePage") && !className.equals("BasePage")){
+        if (!className.equals("HomePage") && !className.equals("BasePage")) {
             wait.until(webDriver ->
             {
                 String value = webDriver.findElement(By.xpath("//input[@class='lcField FlavorRegistration']")).getAttribute("value");
@@ -117,12 +118,22 @@ public class BasePage {
 
     public void takeScreenshot(String fileName) throws IOException {
         File file = driver.getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(file,new File("src/screenshots/"+fileName+".png"));
+        FileUtils.copyFile(file, new File("src/screenshots/" + fileName + ".png"));
     }
 
-    public void takeScreenshot(String fileName,WebElement element) throws IOException {
+    public void takeScreenshot(String fileName, WebElement element) throws IOException {
         File file = driver.getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(file,new File("src/screenshots/"+fileName+".png"));
+        FileUtils.copyFile(file, new File("src/screenshots/" + fileName + ".png"));
     }
 
+    public void switchToNewWindow() {
+        String originalHandle = driver.getWindowHandle();
+        Set<String> windowHandles = driver.getWindowHandles();
+        for (String handle : windowHandles) {
+            if (!handle.equals(originalHandle)) {
+                driver.switchTo().window(handle);
+                break;
+            }
+        }
+    }
 }

@@ -1,24 +1,19 @@
 package ConfigureAppium;
 
-import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.io.FileOutputStream;
 import java.util.Base64;
@@ -44,7 +39,7 @@ public class BaseTest {
         // Set up capabilities
         UiAutomator2Options options = new UiAutomator2Options();
         options.setCapability("platformName", "Android");
-        options.setCapability("deviceName", "RFCNC0B9N0W");
+        options.setCapability("deviceName", "inpb95xslj7p9lpb");
         options.setCapability("automationName", "UiAutomator2");
         options.setCapability("noReset", true);
         options.setCapability("appium:browserName", "chrome");

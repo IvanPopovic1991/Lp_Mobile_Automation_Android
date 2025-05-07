@@ -3,8 +3,10 @@ package Pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 public class FortradeRPage extends BasePage {
@@ -76,6 +78,9 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='formErrorMessage']")
     public WebElement incorrectTokenMsg;
 
+    @FindBy(xpath = "//a[text()=' GB21026472']")
+    protected WebElement fscRegulationLink;
+
     protected By privacyPolicyLinkBy = By.xpath("//span[@class='MarketingMaterials2']//span[@class='fscClass']//a[text()='Privacy Policy']");
 
     protected By termsAndConditionsLinkBy = By.xpath("//span[@class='MarketingMaterials2']//span[@class='fscClass']//a[text()=' Terms and Conditions']");
@@ -101,16 +106,6 @@ public class FortradeRPage extends BasePage {
     protected By footerPrivacyPolicyLinkBy = By.xpath("//div[@class='fscClass']//a[contains(text(),'Privacy policy')]");
 
     protected By footerPrivacyPolicyFortradeRLinkBy = By.xpath("//div[@class='fscClass']//a[contains(text(), 'Privacy policy')]");
-
-    protected By fcaRegulationLinkBy = By.xpath("//a[text()='FRN: 609970']");
-
-    protected By ciroRegulationLinkBy = By.xpath("//a[text()='CRN: BC1148613']");
-
-    protected By asicRegulationLinkBy = By.xpath("//a[text()='ABN: 33 614 683 831 | AFSL: 493520']");
-
-    protected By cysecRegulationLinkBy = By.xpath("//a[text()='CIF license number 385/20']");
-
-    protected By fscRegulationLinkBy = By.xpath("//a[text()=' GB21026472']");
 
     private String expTextForPopUp = "Invalid email. Please try another or proceed to log in. If needed, reset your password in case it's forgotten.";
 
@@ -139,7 +134,7 @@ public class FortradeRPage extends BasePage {
     public String privacyPolicyFSCFooter = "https://www.fortrade.com/wp-content/uploads/legal/FSC/Fortrade_MA_Privacy_Policy.pdf";
 
     // Financial Services Commission, Mauritius (FSC) link
-    public String fscLink = "https://www.fscmauritius.org/en/supervision/register-of-licensees/register-of-licensees-details?licence_no=GB21026472&key=&cat=_GB&code=";
+    public String fscURL = "https://opr.fscmauritius.org/ords/opr/r/fsc-opr/fsc-online-public-register-opr";
 
     public String fbURL = "https://www.facebook.com/Fortrade.International";
 
@@ -193,6 +188,12 @@ public class FortradeRPage extends BasePage {
 
     protected void clickContinueBtn() {
         clickElement(continueBtn, "continue button");
+    }
+
+    public void assertUrl(String url) {
+        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+        wait.until(ExpectedConditions.urlContains(url));
+        Assert.assertEquals(driver.getCurrentUrl(), url);
     }
 
     public void accountRegistration(String firstNameData, String lastNameData, String emailData, String countryCodeData,
@@ -356,6 +357,11 @@ public class FortradeRPage extends BasePage {
         clickSubmitBtn();
         selectKnowledge(knowledgeData);
         clickContinueBtn();
+    }
+
+    public void clickFscLink(){
+        clickElement(fscRegulationLink,"Financial Services Commission, Mauritius FSC GB21026472");
+        switchToNewWindow();
     }
 
 }

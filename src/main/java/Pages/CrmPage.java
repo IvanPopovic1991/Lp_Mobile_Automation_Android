@@ -182,9 +182,6 @@ public class CrmPage {
         ImageIO.write(screenFullImage, "PNG", new File("src/screenshots/" + fileName + ".png"));
     }
 
-
-
-
     public void logInCrm(String username, String password) {
         typeText(usernameCrm, username, "username for CRM");
         typeText(passwordCrm, password, "password for CRM");

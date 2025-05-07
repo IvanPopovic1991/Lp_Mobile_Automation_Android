@@ -12,7 +12,6 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import java.awt.*;
 import java.io.IOException;
@@ -203,6 +202,12 @@ public class pro_Dark_2024_Lp extends BaseTest {
         stopWebBrowser();
     }
 
+    @Test
+    public void checkFscRedirection() throws IOException {
+        fortraderPage.clickFscLink();
+        fortraderPage.assertUrl(fortraderPage.fscURL);
+        fortraderPage.takeScreenshot("Financial Services Commission Mauritius FSC - FortradeR");
+    }
     @Test
     public void emailIsReceivedSuccessfully() throws IOException, AWTException {
         String email = TestData.emailGenerator();

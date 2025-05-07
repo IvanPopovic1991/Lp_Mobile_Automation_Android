@@ -2,14 +2,11 @@ package Pages;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class FortradePage extends BasePage {
 
@@ -104,6 +101,21 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "//div[@class='formErrorMessage']")
     public WebElement incorrectTokenMsg;
 
+    @FindBy(xpath = "//a[text()='FRN: 609970']")
+    protected WebElement fcaRegulationLink;
+
+    @FindBy(xpath = "//a[text()='CRN: BC1148613']")
+    protected WebElement iirocRegulationLink;
+
+    @FindBy(xpath = "//a[text()='ABN: 33 614 683 831 | AFSL: 493520']")
+    protected WebElement asicRegulationLink;
+
+    @FindBy(xpath = "//a[text()='CIF license number 385/20']")
+    protected WebElement cysecRegulationLink;
+
+    @FindBy(xpath = "//a[text()=' GB21026472']")
+    protected WebElement fscRegulationLink;
+
     protected By privacyPolicyLinkBy = By.xpath("//div[@class='form-wrapper']//a[text()='Privacy Policy']");
 
     protected By termsAndConditionsLinkBy = By.xpath("//div[@class='form-wrapper']//a[contains(text(), 'Terms and Conditions')]");
@@ -125,16 +137,6 @@ public class FortradePage extends BasePage {
     protected By footerRiskWarningLinkBy = By.xpath("//div[@class='footerRiskDisclaimer']//a[contains(text(), 'Risk warning')]");
 
     protected By footerPrivacyPolicyLinkBy = By.xpath("//div[@class='footerRiskDisclaimer']//a[contains(text(), 'Privacy policy')]");
-
-    protected By fcaRegulationLinkBy = By.xpath("//a[text()='FRN: 609970']");
-
-    protected By ciroRegulationLinkBy = By.xpath("//a[text()='CRN: BC1148613']");
-
-    protected By asicRegulationLinkBy = By.xpath("//a[text()='ABN: 33 614 683 831 | AFSL: 493520']");
-
-    protected By cysecRegulationLinkBy = By.xpath("//a[text()='CIF license number 385/20']");
-
-    protected By fscRegulationLinkBy = By.xpath("//a[text()=' GB21026472']");
 
     protected By fsgDocument = By.xpath("//div[@class='footerRiskDisclaimer']//div[@class='asicClass']//a[contains(text(),'(FSG)')]");
 
@@ -164,19 +166,19 @@ public class FortradePage extends BasePage {
     protected String ytURL = "https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg";
 
     // Financial Conduct Authority (FCA) link
-    protected String fcaLink = "https://register.fca.org.uk/s/firm?id=001b000000NMdUwAAL";
+    public String fcaURL = "https://register.fca.org.uk/s/firm?id=001b000000NMdUwAAL";
 
     // Canadian Investment Regulatory Organization (CIRO) link
-    protected String iirocLink = "https://www.ciro.ca/investors/choosing-investment-advisor/dealers-we-regulate/fortrade-canada-limited";
+    public String iirocURL = "https://www.ciro.ca/investors/choosing-investment-advisor/dealers-we-regulate/fortrade-canada-limited";
 
     // Australian Securities and Investments Commission (ASIC) link
-    protected String asicLink = "https://asic.gov.au/online-services/service-availability/";
+    public String asicURL = "https://asic.gov.au/online-services/service-availability/";
 
     // Cyprus Securities and Exchange Commission (CySEC) link
-    protected String cysecLink = "https://www.cysec.gov.cy/en-GB/entities/investment-firms/cypriot/86639/";
+    public String cysecURL = "https://www.cysec.gov.cy/en-GB/entities/investment-firms/cypriot/86639/";
 
     // Financial Services Commission, Mauritius (FSC) link
-    protected String fscLink = "https://www.fscmauritius.org/en/supervision/register-of-licensees/register-of-licensees-details?licence_no=GB21026472&key=&cat=_GB&code=";
+    public String fscURL = "https://opr.fscmauritius.org/ords/opr/r/fsc-opr/fsc-online-public-register-opr";
 
     // Asic regulation - financial service guide document link
     protected String fsgDocumentLink = "https://www.fortrade.com/wp-content/uploads/legal/ASIC/Fort_Securities_AU_Financial_Services_Guide-ASIC.pdf";
@@ -244,6 +246,7 @@ public class FortradePage extends BasePage {
     }
 
     public void assertUrl(String url) {
+        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
         wait.until(ExpectedConditions.urlContains(url));
         Assert.assertEquals(driver.getCurrentUrl(), url);
     }
@@ -416,6 +419,31 @@ public class FortradePage extends BasePage {
         clickSubmitBtn();
         selectKnowledge(knowledgeData);
         clickContinueBtn();
+    }
+
+    public void clickFcaLink(){
+        clickElement(fcaRegulationLink,"Financial Conduct Authority (FCA), FRN: 609970. link");
+        switchToNewWindow();
+    }
+
+    public void clickIirocLink(){
+        clickElement(iirocRegulationLink,"Canadian Investor Protection Fund (CIPF). CRN: BC1148613 link");
+        switchToNewWindow();
+    }
+
+    public void clickAsicLink(){
+        clickElement(asicRegulationLink,"Australian Securities and Investments Commission (ASIC) ABN: 33 614 683 831 | AFSL: 493520 link");
+        switchToNewWindow();
+    }
+
+    public void clickCysecLink(){
+        clickElement(cysecRegulationLink,"Cyprus Securities and Exchange Commission (CySEC) with CIF license number 385/20");
+        switchToNewWindow();
+    }
+
+    public void clickFscLink(){
+        clickElement(fscRegulationLink,"Financial Services Commission, Mauritius FSC GB21026472");
+        switchToNewWindow();
     }
 
 }
