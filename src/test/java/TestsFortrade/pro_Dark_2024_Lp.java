@@ -2,10 +2,7 @@ package TestsFortrade;
 
 import ConfigureAppium.BaseTest;
 import Faker.TestData;
-import Pages.BasePage;
-import Pages.CrmPage;
-import Pages.FortradePage;
-import Pages.HomePage;
+import Pages.*;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
@@ -230,6 +227,21 @@ public class pro_Dark_2024_Lp extends BaseTest {
         crmPage.checkLinkIdValue("knowledge_of_trading_all_the_above,M-android");
         Thread.sleep(1000);
         crmPage.takeScreenshot( "Knowledge parameter value "+regulation, crmPage.linkId);
+        stopWebBrowser();
+    }
+
+    @Test
+    @Parameters({"regulation", "countryCode"})
+    public void emailIsReceivedSuccessfully(String regulation, String countryCode) throws IOException, AWTException {
+        String email = TestData.emailGenerator();
+        fortradePage.accountRegistration("Testq", "Testa", email, countryCode, TestData.numberGenerator(),
+                "25-34", "$15,000-$50,000", "$50,000 – $100,000", "All the above");
+        startChromeBrowserOnDesktop();
+        MailinatorPage mailinator = new MailinatorPage(chromeDriver);
+        chromeDriver.get("https://www.mailinator.com/");
+        mailinator.findEmail(email);
+        mailinator.zoomOutMethod();
+        mailinator.takeScreenshot("Email is received successfully - " + regulation + " regulation", mailinator.emailTitle);
         stopWebBrowser();
     }
 

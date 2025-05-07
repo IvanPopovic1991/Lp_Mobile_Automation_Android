@@ -9,11 +9,7 @@
         <classes>
             <class name="TestsFortradeR.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="checkingTagsInTheCrm"/>
-                    <include name="checkingAgeParameter"/>
-                    <include name="checkingAnnualParameter"/>
-                    <include name="checkingSavingParameter"/>
-                    <include name="checkingKnowledgeParameter"/>
+                    <include name="emailIsReceivedSuccessfully"/>
                 </methods>
             </class>
         </classes>

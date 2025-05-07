@@ -115,7 +115,7 @@ public class BaseTest {
         options.setBinary(filePath);
         chromeDriver = new ChromeDriver(options);
         chromeDriver.manage().window().maximize();
-        chromeDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        chromeDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
     public void stopAppium() {
