@@ -5,22 +5,18 @@
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
     </listeners>
-    <!--<test name="Fortrade - successfully demo account registration - FSC regulation">
+    <test name="Fortrade - successfully demo account registration - FSC regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=2051&amp;regulation=FSC"/>
         <parameter name="countryCode" value="381"/>
         <parameter name="regulation" value="FSC"/>
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="checkingTagsInTheCrm"/>
-                    <include name="checkingAgeParameter"/>
-                    <include name="checkingAnnualParameter"/>
-                    <include name="checkingSavingParameter"/>
-                    <include name="checkingKnowledgeParameter"/>
+                    <include name="checkFscRedirection"/>
                 </methods>
             </class>
         </classes>
-    </test>-->
+    </test>
     <test name="Fortrade - successfully demo account - FCA regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=1006453&amp;regulation=FCA"/>
         <parameter name="countryCode" value="44"/>
@@ -28,11 +24,7 @@
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="checkingTagsInTheCrm"/>
-                    <include name="checkingAgeParameter"/>
-                    <include name="checkingAnnualParameter"/>
-                    <include name="checkingSavingParameter"/>
-                    <include name="checkingKnowledgeParameter"/>
+                    <include name="checkFcaRedirection"/>
                 </methods>
             </class>
         </classes>
@@ -44,11 +36,7 @@
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="checkingTagsInTheCrm"/>
-                    <include name="checkingAgeParameter"/>
-                    <include name="checkingAnnualParameter"/>
-                    <include name="checkingSavingParameter"/>
-                    <include name="checkingKnowledgeParameter"/>
+                    <include name="checkIirocRedirection"/>
                 </methods>
             </class>
         </classes>
@@ -60,11 +48,18 @@
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="checkingTagsInTheCrm"/>
-                    <include name="checkingAgeParameter"/>
-                    <include name="checkingAnnualParameter"/>
-                    <include name="checkingSavingParameter"/>
-                    <include name="checkingKnowledgeParameter"/>
+                    <include name="checkAsicRedirection"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Fortrade - test cases - Cysec regulation">
+        <parameter name="tag" value="?tg=skip&amp;G_GEO=1000997&amp;regulation=CYSEC"/>
+        <parameter name="regulation" value="cysec"/>
+        <classes>
+            <class name="TestsFortrade.pro_Dark_2024_Lp">
+                <methods>
+                    <include name="checkCysecRedirection"/>
                 </methods>
             </class>
         </classes>

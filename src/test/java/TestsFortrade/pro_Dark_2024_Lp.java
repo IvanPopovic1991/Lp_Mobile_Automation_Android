@@ -2,24 +2,25 @@ package TestsFortrade;
 
 import ConfigureAppium.BaseTest;
 import Faker.TestData;
-import Pages.BasePage;
 import Pages.CrmPage;
 import Pages.FortradePage;
 import Pages.HomePage;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.time.Duration;
 
 public class pro_Dark_2024_Lp extends BaseTest {
 
@@ -32,6 +33,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         driver.get("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=age-annual-saving-knowledge");
         waitForElement(driver.findElement(By.xpath("//input[@id='PhoneCountryCode']")), "0");
         fortradePage = new FortradePage((AndroidDriver) driver);
+        fortradePage.clickDenyBtn();
     }
     
     @AfterMethod
@@ -233,4 +235,40 @@ public class pro_Dark_2024_Lp extends BaseTest {
         stopWebBrowser();
     }
 
+    @Test
+    public void checkFcaRedirection() throws IOException {
+        fortradePage.clickFcaLink();
+        fortradePage.assertUrl(fortradePage.fcaURL);
+        fortradePage.takeScreenshot("Financial Conduct Authority - FCA regulation");
+    }
+
+    @Test
+    public void checkIirocRedirection() throws IOException {
+        fortradePage.clickIirocLink();
+        fortradePage.assertUrl(fortradePage.iirocURL);
+        fortradePage.takeScreenshot("Canadian Investor Protection Fund (CIPF) - Iiroc regulation");
+    }
+
+    @Test
+    public void checkAsicRedirection() throws IOException {
+        fortradePage.clickAsicLink();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+        wait.until(ExpectedConditions.urlContains("https://connectonline.asic.gov.au/"));
+        fortradePage.takeScreenshot("Australian Securities and Investments Commission - ASIC regulation");
+    }
+
+    @Test
+    public void checkCysecRedirection() throws IOException {
+        fortradePage.clickCysecLink();
+        fortradePage.assertUrl(fortradePage.cysecURL);
+        fortradePage.takeScreenshot("Cyprus Securities and Exchange Commission - CySEC regulation");
+    }
+
+    @Test
+    public void checkFscRedirection() throws IOException {
+        fortradePage.clickFscLink();
+        fortradePage.assertUrl(fortradePage.fscURL);
+        fortradePage.takeScreenshot("Financial Services Commission Mauritius FSC - regulation");
+    }
 }
