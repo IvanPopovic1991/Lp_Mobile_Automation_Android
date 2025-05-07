@@ -7,10 +7,15 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 public class MailinatorPage {
@@ -106,6 +111,37 @@ public class MailinatorPage {
             robot.keyRelease(KeyEvent.VK_MINUS);
             robot.keyRelease(KeyEvent.VK_CONTROL);
         }
+    }
+
+    public void takeScreenshot(String fileName, WebElement element) throws AWTException, IOException {
+
+        FluentWait<WebDriver> wait = new FluentWait<>(chromeDriver)
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .ignoring(Exception.class);
+
+        wait.until(ExpectedConditions.visibilityOf(element));
+
+        // Using java.awt.Robot and java.awt.Dimension for full screen capture
+        Robot robot = new Robot();
+        java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        java.awt.Rectangle screenRect = new java.awt.Rectangle(screenSize);
+        BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+
+        // Saving the full screen image
+        ImageIO.write(screenFullImage, "PNG", new File("src/screenshots/" + fileName + ".png"));
+    }
+
+    public void takeScreenshot(String fileName) throws AWTException, IOException {
+
+        // Using java.awt.Robot and java.awt.Dimension for full screen capture
+        Robot robot = new Robot();
+        java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        java.awt.Rectangle screenRect = new java.awt.Rectangle(screenSize);
+        BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+
+        // Saving the full screen image
+        ImageIO.write(screenFullImage, "PNG", new File("src/screenshots/" + fileName + ".png"));
     }
 
 }
