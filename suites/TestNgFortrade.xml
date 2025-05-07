@@ -28,7 +28,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test>-->
     <test name="Fortrade - successfully demo account - Iiroc regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=9077369&amp;regulation=IIROC"/>
         <parameter name="countryCode" value="1"/>
@@ -63,5 +63,5 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test>-->
 </suite>

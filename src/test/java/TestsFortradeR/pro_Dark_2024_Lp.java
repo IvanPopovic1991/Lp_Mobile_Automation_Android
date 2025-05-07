@@ -5,6 +5,7 @@ import Faker.TestData;
 import Pages.CrmPage;
 import Pages.FortradeRPage;
 import Pages.HomePage;
+import Pages.MailinatorPage;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
@@ -206,6 +207,20 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortraderPage.clickFscLink();
         fortraderPage.assertUrl(fortraderPage.fscURL);
         fortraderPage.takeScreenshot("Financial Services Commission Mauritius FSC - FortradeR");
+    }
+    @Test
+    public void emailIsReceivedSuccessfully() throws IOException, AWTException {
+        String email = TestData.emailGenerator();
+        fortraderPage.accountRegistration("Testq", "Testa", email,
+                "381", TestData.numberGenerator(), "25-34", "$15,000-$50,000",
+                "$50,000 – $100,000", "All the above");
+        startChromeBrowserOnDesktop();
+        MailinatorPage mailinator = new MailinatorPage(chromeDriver);
+        chromeDriver.get("https://www.mailinator.com/");
+        mailinator.findEmail(email);
+        mailinator.zoomOutMethod();
+        mailinator.takeScreenshot("Email is received successfully - FortradeR", mailinator.emailTitle);
+        stopWebBrowser();
     }
 
     @AfterMethod
