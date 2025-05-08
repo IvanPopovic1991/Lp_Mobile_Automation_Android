@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Fortrade landing pages">
-    <listeners>
+    <!--<listeners>
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
+<<<<<<< Updated upstream
     </listeners>
     <test name="Fortrade - successfully demo account registration - FSC regulation">
+=======
+    </listeners>-->
+    <!--<test name="Fortrade - successfully demo account registration - FSC regulation">
+>>>>>>> Stashed changes
         <parameter name="tag" value="tg=skip&amp;G_GEO=2051&amp;regulation=FSC"/>
         <parameter name="countryCode" value="381"/>
         <parameter name="regulation" value="FSC"/>
@@ -16,7 +21,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test>-->
     <test name="Fortrade - successfully demo account - FCA regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=1006453&amp;regulation=FCA"/>
         <parameter name="countryCode" value="44"/>
@@ -24,12 +29,12 @@
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="checkFcaRedirection"/>
+                    <include name="checkFCAPercentages"/>
                 </methods>
             </class>
         </classes>
-    </test>-->
-    <test name="Fortrade - successfully demo account - Iiroc regulation">
+    </test>
+    <!--<test name="Fortrade - successfully demo account - Iiroc regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=9077369&amp;regulation=IIROC"/>
         <parameter name="countryCode" value="1"/>
         <parameter name="regulation" value="iiroc"/>

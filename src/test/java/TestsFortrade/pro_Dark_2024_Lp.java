@@ -288,4 +288,17 @@ public class pro_Dark_2024_Lp extends BaseTest {
         mailinator.takeScreenshot("Email is received successfully - " + regulation + " regulation", mailinator.emailTitle);
         stopWebBrowser();
     }
+
+    @Test
+    @Parameters({"tag", "regulation"})
+    public void checkFCAPercentages(String tag, String regulation) throws IOException, AWTException {
+        fortradePage.checkPercentages("71% of retail investor accounts lose money when trading CFDs with this provider.");
+        try {
+            Thread.sleep(500);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        fortradePage.takeScreenshot("Percentages - " + regulation + " regulation");
+    }
+
 }
