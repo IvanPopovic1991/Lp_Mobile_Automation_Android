@@ -143,6 +143,8 @@ public class FortradePage extends BasePage {
     protected By pdsDocument = By.xpath("//div[@class='footerRiskDisclaimer']//div[@class='asicClass']//a[contains(text(),'(PDS)')]");
 
     protected By tmdDocument = By.xpath("//div[@class='footerRiskDisclaimer']//div[@class='asicClass']//a[contains(text(),'(TMD)')]");
+    By dynamicPercentagesBy = By.xpath("//div[@class='rwLong']//strong[contains(text(), '% of retail investor accounts lose money when trading CFDs with this provider.')]");
+    By staticPercentagesBy = By.xpath("//div[@class='footerRiskDisclaimer']//b[contains(text(), '% of retail investor accounts lose money when trading CFDs with this provider.')]");
 
     private String expTextForPopUp = "Invalid email. Please try another or proceed to log in. If needed, reset your password in case it's forgotten.";
 
@@ -441,9 +443,15 @@ public class FortradePage extends BasePage {
         switchToNewWindow();
     }
 
-    public void clickFscLink(){
-        clickElement(fscRegulationLink,"Financial Services Commission, Mauritius FSC GB21026472");
+    public void clickFscLink() {
+        clickElement(fscRegulationLink, "Financial Services Commission, Mauritius FSC GB21026472");
         switchToNewWindow();
+    }
+
+    public void checkPercentages (String textForPercentages){
+        Assert.assertEquals(getText(returnDisplayedElement(dynamicPercentagesBy), "dynamicPercentages"), textForPercentages);
+        scrollToElementBy(staticPercentagesBy);
+        Assert.assertEquals(getText(returnDisplayedElement(staticPercentagesBy), "staticPercentages"), textForPercentages);
     }
 
 }
