@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Set;
+import java.util.List;
+import java.util.Objects;
 
 public class BasePage {
 
@@ -77,7 +79,8 @@ public class BasePage {
         }
     }
 
-    public void scrollToElementBy(By elementBy){
+
+    public void scrollToElementBy (By elementBy){
         JavascriptExecutor js = (JavascriptExecutor) driver;
         /*js.executeScript("setTimeout(() => arguments[0].scrollIntoView(true), 100);", driver.findElement(elementBy));
         js.executeScript("window.scrollBy(0, -200);");*/
@@ -153,4 +156,27 @@ public class BasePage {
             }
         }
     }
+
+    public WebElement returnDisplayedElement(By element) {
+        int retries = 5;
+        int delay = 1000; // 2 seconds
+
+        for (int i = 0; i < retries; i++) {
+            try {
+                // Check for element visibility
+                List<WebElement> elements = driver.findElements(element);
+                for (WebElement displayedElement : elements) {
+                    if (displayedElement.isDisplayed()) {
+                        return displayedElement;
+                    }
+                }
+                // If element not found, pause briefly and try again
+                Thread.sleep(delay);
+            } catch (Exception e) {
+                System.out.println("Retrying to find element: " + e.getMessage());
+            }
+        }
+        return null; // Return null if not found after retries
+    }
+
 }

@@ -135,6 +135,9 @@ public class FortradePage extends BasePage {
 
     protected By youtubeLinkBy = By.xpath("//a[@href='https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg']");
 
+    By dynamicPercentagesBy = By.xpath("//div[@class='rwLong']//strong[contains(text(), '% of retail investor accounts lose money when trading CFDs with this provider.')]");
+  
+    By staticPercentagesBy = By.xpath("//div[@class='footerRiskDisclaimer']//b[contains(text(), '% of retail investor accounts lose money when trading CFDs with this provider.')]");
 
     private String expTextForPopUp = "Invalid email. Please try another or proceed to log in. If needed, reset your password in case it's forgotten.";
 
@@ -507,5 +510,10 @@ public class FortradePage extends BasePage {
         scrollToElementBy(By.xpath("//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"));
         clickElement(alrHaveAccount,"An already have an account? link");
     }
-
+  
+    public void checkPercentages (String textForPercentages){
+        Assert.assertEquals(getText(returnDisplayedElement(dynamicPercentagesBy), "dynamicPercentages"), textForPercentages);
+        scrollToElementBy(staticPercentagesBy);
+        Assert.assertEquals(getText(returnDisplayedElement(staticPercentagesBy), "staticPercentages"), textForPercentages);
+    }
 }

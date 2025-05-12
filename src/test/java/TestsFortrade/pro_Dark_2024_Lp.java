@@ -365,4 +365,15 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortradePage.secondStepErrorMessage(1);
         fortradePage.takeScreenshot("Age parameter error message - Fortrade - " + regulation);
     }
+
+    @Parameters({"tag", "regulation"})
+    public void checkFCAPercentages(String tag, String regulation) throws IOException, AWTException {
+        fortradePage.checkPercentages("71% of retail investor accounts lose money when trading CFDs with this provider.");
+        try {
+            Thread.sleep(500);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        fortradePage.takeScreenshot("Percentages - " + regulation + " regulation");
+    }
 }
