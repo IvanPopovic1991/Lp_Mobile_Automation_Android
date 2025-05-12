@@ -72,9 +72,25 @@ public class BasePage {
             driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(" + text + "));"));
             System.out.println("Scrolled to the " + log + " element");
         } catch (Exception e) {
-            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"));"));
+            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(" + text + "));"));
             System.out.println("Scrolled to the " + log + " element");
         }
+    }
+
+    public void scrollToElementBy(By elementBy){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        /*js.executeScript("setTimeout(() => arguments[0].scrollIntoView(true), 100);", driver.findElement(elementBy));
+        js.executeScript("window.scrollBy(0, -200);");*/
+
+        WebElement element = driver.findElement(elementBy);
+        int elementPosition = element.getLocation().getY();
+
+// Calculate the vertical position needed to bring the element to the middle
+        int windowHeight = ((Long) js.executeScript("return window.innerHeight")).intValue();
+        int scrollToPosition = elementPosition - (windowHeight / 2);
+
+// Scroll to bring the element in the center
+        js.executeScript("window.scrollTo(0, " + scrollToPosition + ");");
     }
 
     public void selectFromDropdown(WebElement element, String text, String log) {
@@ -122,6 +138,7 @@ public class BasePage {
     }
 
     public void takeScreenshot(String fileName, WebElement element) throws IOException {
+        wait.until(ExpectedConditions.visibilityOf(element));
         File file = driver.getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(file, new File("src/screenshots/" + fileName + ".png"));
     }

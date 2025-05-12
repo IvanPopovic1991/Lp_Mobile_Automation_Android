@@ -5,11 +5,17 @@
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
     </listeners>
-    <test name="FortradeR - successfully demo account registration">
+    <test name="FortradeR - test cases">
         <classes>
             <class name="TestsFortradeR.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="checkFscRedirection"/>
+                    <include name="didNotGetToken"/>
+                    <include name="userIsReturnedTo1stWidget"/>
+                    <include name="emptyDataAccountRegistration"/>
+                    <include name="checkLogoClickability"/>
+                    <include name="checkCountryCodeErrorMsg"/>
+                    <include name="checkLoginRedirection"/>
+                    <include name="errorMessageAgeParameter"/>
                 </methods>
             </class>
         </classes>
