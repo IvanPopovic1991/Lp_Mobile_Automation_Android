@@ -8,6 +8,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class FortradePage extends BasePage {
 
     public FortradePage(AndroidDriver driver) {
@@ -66,10 +70,10 @@ public class FortradePage extends BasePage {
     protected WebElement popUpNotification;
 
     @FindBy(xpath = "(//div[@class='errorValidationIn'])[last()]")
-    protected WebElement countryCodeErrorMessage;
+    public WebElement countryCodeErrorMessage;
 
-    @FindBy(xpath = "//div[contains(text(),'Login')]")
-    protected WebElement loginToFotrade;
+    @FindBy(xpath = "//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]")
+    public WebElement alrHaveAccount;
 
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-Age lcFieldWrapper']//select")
     protected WebElement age;
@@ -116,15 +120,14 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "//a[text()=' GB21026472']")
     protected WebElement fscRegulationLink;
 
-    protected By privacyPolicyLinkBy = By.xpath("//div[@class='form-wrapper']//a[text()='Privacy Policy']");
+    @FindBy(xpath = "//input[@class='TokenBack-Button']")
+    protected WebElement didNotGetToken;
 
-    protected By termsAndConditionsLinkBy = By.xpath("//div[@class='form-wrapper']//a[contains(text(), 'Terms and Conditions')]");
+    @FindBy(xpath = "//label[@name='SentAgainLabel']")
+    public WebElement codeIsSent;
 
-    protected By clickHereLink = By.xpath("//span[@class='allMarketingMaterials']//a[text()='click here']");
-
-    protected By alreadyHaveAnAccountLinkBy = By.xpath("//*[@class='alreadyHaveAcc']//a[contains(text(), 'Already have an account?')]");
-
-    protected By contactUsLinkBy = By.xpath("//*[@class='needHelp']//a[contains(text(), 'Contact Us')]");
+    @FindBy(xpath = "//input[@id='Details-Edit-Btn']")
+    public WebElement penBtn;
 
     protected By facebookLinkBy = By.xpath("//a[@class='facebook-links']");
 
@@ -132,18 +135,8 @@ public class FortradePage extends BasePage {
 
     protected By youtubeLinkBy = By.xpath("//a[@href='https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg']");
 
-    protected By supportLinkBy = By.xpath("//a[text()='support@fortrade.com']");
-
-    protected By footerRiskWarningLinkBy = By.xpath("//div[@class='footerRiskDisclaimer']//a[contains(text(), 'Risk warning')]");
-
-    protected By footerPrivacyPolicyLinkBy = By.xpath("//div[@class='footerRiskDisclaimer']//a[contains(text(), 'Privacy policy')]");
-
-    protected By fsgDocument = By.xpath("//div[@class='footerRiskDisclaimer']//div[@class='asicClass']//a[contains(text(),'(FSG)')]");
-
-    protected By pdsDocument = By.xpath("//div[@class='footerRiskDisclaimer']//div[@class='asicClass']//a[contains(text(),'(PDS)')]");
-
-    protected By tmdDocument = By.xpath("//div[@class='footerRiskDisclaimer']//div[@class='asicClass']//a[contains(text(),'(TMD)')]");
     By dynamicPercentagesBy = By.xpath("//div[@class='rwLong']//strong[contains(text(), '% of retail investor accounts lose money when trading CFDs with this provider.')]");
+  
     By staticPercentagesBy = By.xpath("//div[@class='footerRiskDisclaimer']//b[contains(text(), '% of retail investor accounts lose money when trading CFDs with this provider.')]");
 
     private String expTextForPopUp = "Invalid email. Please try another or proceed to log in. If needed, reset your password in case it's forgotten.";
@@ -159,7 +152,7 @@ public class FortradePage extends BasePage {
     protected String howToUnsubscribeURL = "https://www.fortrade.com/wp-content/uploads/legal/How_to_guides/How_to_unsubscribe.pdf";
 
     // Already have an account
-    protected String alrHaveAccount = "https://ready.fortrade.com/";
+    public String appUrl = "https://ready.fortrade.com/";
 
     protected String fbURL = "https://www.facebook.com/";
 
@@ -217,7 +210,7 @@ public class FortradePage extends BasePage {
 
     protected void clickSubmitBtn() {
         if (submitButton.isDisplayed()) {
-            clickElement(submitButton,"Submit button");
+            clickElement(submitButton, "Submit button");
         } else {
             clickElement(submitBtnAsic, "Submit button - Asic regulation");
         }
@@ -271,14 +264,13 @@ public class FortradePage extends BasePage {
     }
 
     public void unsuccessfullyRegistrationWrongData(String firstNameData, String lastNameData, String emailData, String countryCodeData,
-                                                    String phoneData) {
+                                                    String phoneData) throws IOException {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
         enterCountryCode(countryCodeData);
         enterPhone(phoneData);
         closeKeyboard();
-        clickDenyBtn();
         clickSubmitBtn();
     }
 
@@ -287,6 +279,15 @@ public class FortradePage extends BasePage {
             Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidationIn'])[position()=number]".replace("number", String.valueOf(i))), "error message " + errorMessages[i - 1]), errorMessages[i - 1]);
         }
     }
+
+    public void secondStepErrorMessage(int numberOfParameters) throws InterruptedException {
+        Thread.sleep(2000);
+        for (int i = 1; i <= numberOfParameters; i++) {
+            Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidation'])[position()=number]".replace("number", String.valueOf(i))),
+                    "error message " + "Please select an option from the dropdown list."), "Please select an option from the dropdown list.");
+        }
+    }
+
 
     public void assertSameNameErrorMsg() {
         for (int i = 1; i <= 2; i++) {
@@ -353,7 +354,7 @@ public class FortradePage extends BasePage {
     }
 
     public void firstStepWidget(String firstNameData, String lastNameData, String emailData, String countryCodeData,
-                                String phoneData){
+                                String phoneData) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -363,13 +364,12 @@ public class FortradePage extends BasePage {
         clickSubmitBtn();
     }
 
-    public void assertPopUpAlreadyRegisteredAccount(){
+    public void assertPopUpAlreadyRegisteredAccount() {
         Assert.assertEquals(getText(alrdRegEmailPopUp, "alrdRegEmailPopUp"), expTextForPopUp);
     }
 
     public void ageParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
-            , String ageData) {
-        clickDenyBtn();
+                             ,String ageData) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -423,23 +423,60 @@ public class FortradePage extends BasePage {
         clickContinueBtn();
     }
 
-    public void clickFcaLink(){
-        clickElement(fcaRegulationLink,"Financial Conduct Authority (FCA), FRN: 609970. link");
+    public void clickDidNotGetToken() {
+        clickElement(didNotGetToken, "Did not get token text");
+    }
+
+    public void tokenIsNotReceived(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String ageData, String annualData, String savingData, String knowledgeData) throws InterruptedException {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectAge(ageData);
+        selectAnnual(annualData);
+        selectSaving(savingData);
+        selectKnowledge(knowledgeData);
+        clickDidNotGetToken();
+        Thread.sleep(2000);
+    }
+
+    public void clickThePenBtn() {
+        clickElement(penBtn, "pen button on the 2nd step widget");
+    }
+
+    public void returnToThe1stWidget(String firstNameData, String lastNameData, String emailData, String countryCodeData
+            , String phoneNumberData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        clickThePenBtn();
+    }
+
+    public void clickFcaLink() {
+        clickElement(fcaRegulationLink, "Financial Conduct Authority (FCA), FRN: 609970. link");
         switchToNewWindow();
     }
 
-    public void clickIirocLink(){
-        clickElement(iirocRegulationLink,"Canadian Investor Protection Fund (CIPF). CRN: BC1148613 link");
+    public void clickIirocLink() {
+        clickElement(iirocRegulationLink, "Canadian Investor Protection Fund (CIPF). CRN: BC1148613 link");
         switchToNewWindow();
     }
 
-    public void clickAsicLink(){
-        clickElement(asicRegulationLink,"Australian Securities and Investments Commission (ASIC) ABN: 33 614 683 831 | AFSL: 493520 link");
+    public void clickAsicLink() {
+        clickElement(asicRegulationLink, "Australian Securities and Investments Commission (ASIC) ABN: 33 614 683 831 | AFSL: 493520 link");
         switchToNewWindow();
     }
 
-    public void clickCysecLink(){
-        clickElement(cysecRegulationLink,"Cyprus Securities and Exchange Commission (CySEC) with CIF license number 385/20");
+    public void clickCysecLink() {
+        clickElement(cysecRegulationLink, "Cyprus Securities and Exchange Commission (CySEC) with CIF license number 385/20");
         switchToNewWindow();
     }
 
@@ -448,10 +485,35 @@ public class FortradePage extends BasePage {
         switchToNewWindow();
     }
 
+    public void clickLogo(String regulation,String url){
+        try {
+            if (regulation.equalsIgnoreCase("iiroc")){
+                wait.until(ExpectedConditions.visibilityOf(logoIiroc));
+                clickElement(logoIiroc,"iiroc logo");
+            } else if(regulation.equalsIgnoreCase("cysec")){
+                wait.until(ExpectedConditions.visibilityOf(logoCysec));
+                clickElement(logoCysec,"cysec logo");
+            }else {
+                wait.until(ExpectedConditions.visibilityOf(logo));
+                clickElement(logo,regulation + "logo");
+            }
+            System.out.println("Logo is not clickable");
+        } catch (Exception e){
+            System.out.println( e + "Logo is clickable");
+        }
+        assertUrl(url);
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        Assert.assertEquals(tabs.size(),1);
+    }
+
+    public void clickAlrHaveAnAcc(){
+        scrollToElementBy(By.xpath("//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"));
+        clickElement(alrHaveAccount,"An already have an account? link");
+    }
+  
     public void checkPercentages (String textForPercentages){
         Assert.assertEquals(getText(returnDisplayedElement(dynamicPercentagesBy), "dynamicPercentages"), textForPercentages);
         scrollToElementBy(staticPercentagesBy);
         Assert.assertEquals(getText(returnDisplayedElement(staticPercentagesBy), "staticPercentages"), textForPercentages);
     }
-
 }

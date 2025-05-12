@@ -27,6 +27,7 @@ import java.time.Duration;
 public class pro_Dark_2024_Lp extends BaseTest {
 
     FortradePage fortradePage;
+    HomePage homePage;
 
     @Parameters({"tag"})
     @BeforeMethod
@@ -35,6 +36,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         driver.get("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=age-annual-saving-knowledge");
         waitForElement(driver.findElement(By.xpath("//input[@id='PhoneCountryCode']")), "0");
         fortradePage = new FortradePage((AndroidDriver) driver);
+        homePage = new HomePage((AndroidDriver) driver);
         fortradePage.clickDenyBtn();
     }
     
@@ -290,6 +292,80 @@ public class pro_Dark_2024_Lp extends BaseTest {
     }
 
     @Test
+    @Parameters({"tag","countryCode","regulation"})
+    public void didNotGetToken(String tag,String countryCode,String regulation) throws InterruptedException, IOException {
+        driver.get("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=sms-age-annual-saving-knowledge");
+        fortradePage.tokenIsNotReceived("Testq", "Testa", TestData.emailGenerator(), countryCode,
+                TestData.numberGenerator(), "25-34", "$15,000-$50,000", "$50,000 – $100,000",
+                "All the above");
+        if (fortradePage.codeIsSent.isDisplayed()) {
+            Assert.assertEquals(fortradePage.codeIsSent.getText(), "We sent you the code again");
+            fortradePage.takeScreenshot("We sent you the code again - " + regulation);
+        }
+    }
+
+    @Test
+    @Parameters({"tag","countryCode","regulation"})
+    public void userIsReturnedTo1stWidget(String tag,String countryCode,String regulation) throws IOException {
+        driver.get("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=sms-age-annual-saving-knowledge");
+        fortradePage.returnToThe1stWidget("Testq", "Testa", TestData.emailGenerator(), countryCode,
+                TestData.numberGenerator());
+        fortradePage.takeScreenshot("The user is returned to the 1st form widget - "+regulation, fortradePage.alrHaveAccount);
+    }
+
+    @Test
+    @Parameters({"regulation"})
+    public void emptyDataAccountRegistration(String regulation) throws IOException {
+        fortradePage.unsuccessfullyRegistrationWrongData("","","","",
+                "");
+        fortradePage.assertErrorMessages();
+        fortradePage.assertColor("red");
+        fortradePage.takeScreenshot("Demo account registration - no data - "+ regulation);
+    }
+
+    @Test
+    @Parameters({"regulation","tag"})
+    public void checkLogoClickability(String regulation, String tag) throws IOException {
+        fortradePage.clickLogo(regulation,"https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?"+tag+"&fts=age-annual-saving-knowledge");
+        fortradePage.takeScreenshot("Logo is not clickable "+regulation);
+    }
+
+    @Test
+    @Parameters("regulation")
+    public void checkCountryCodeErrorMsg(String regulation) throws IOException {
+        fortradePage.firstStepWidget("Testq","Testa",TestData.emailGenerator(),"/*@#$",
+        TestData.numberGenerator());
+        Assert.assertEquals(fortradePage.getText(fortradePage.countryCodeErrorMessage,
+                "Country code field error message : "+fortradePage.countryCodeErrorMessage.getText()),
+                "Please enter a valid country code");
+        fortradePage.takeScreenshot("Country code error message "+regulation);
+    }
+
+    @Test
+    @Parameters({"regulation"})
+    public void checkLoginRedirection(String regulation) throws IOException {
+        fortradePage.clickAlrHaveAnAcc();
+        try {
+            if (driver.getCurrentUrl().contains(fortradePage.appUrl) && homePage.fortradeLogo.isDisplayed()) {
+                fortradePage.takeScreenshot("Login redirection-user is redirected to the app " + regulation, homePage.fortradeLogo);
+            }
+        } catch (Exception e) {
+            System.out.println(e + "Wrong link redirection");
+        }
+    }
+
+    @Test
+    @Parameters({"tag","countryCode","regulation"})
+    public void errorMessageAgeParameter(String tag,String countryCode ,String regulation) throws IOException,InterruptedException {
+        String email = TestData.emailGenerator();
+        String phoneNumber = TestData.numberGenerator();
+        driver.get("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?fts=age&"+tag);
+        fortradePage.ageParameter("Testq", "Testa", email, countryCode, phoneNumber,
+                "-- Select --");
+        fortradePage.secondStepErrorMessage(1);
+        fortradePage.takeScreenshot("Age parameter error message - Fortrade - " + regulation);
+    }
+
     @Parameters({"tag", "regulation"})
     public void checkFCAPercentages(String tag, String regulation) throws IOException, AWTException {
         fortradePage.checkPercentages("71% of retail investor accounts lose money when trading CFDs with this provider.");
@@ -300,5 +376,4 @@ public class pro_Dark_2024_Lp extends BaseTest {
         }
         fortradePage.takeScreenshot("Percentages - " + regulation + " regulation");
     }
-
 }

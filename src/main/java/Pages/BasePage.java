@@ -74,10 +74,11 @@ public class BasePage {
             driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(" + text + "));"));
             System.out.println("Scrolled to the " + log + " element");
         } catch (Exception e) {
-            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"));"));
+            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(" + text + "));"));
             System.out.println("Scrolled to the " + log + " element");
         }
     }
+
 
     public void scrollToElementBy (By elementBy){
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -140,6 +141,7 @@ public class BasePage {
     }
 
     public void takeScreenshot(String fileName, WebElement element) throws IOException {
+        wait.until(ExpectedConditions.visibilityOf(element));
         File file = driver.getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(file, new File("src/screenshots/" + fileName + ".png"));
     }

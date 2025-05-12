@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 public class pro_Dark_2024_Lp extends BaseTest {
 
     FortradeRPage fortraderPage;
+    HomePage homePage;
 
     @BeforeMethod
     public void setup() throws MalformedURLException, URISyntaxException {
@@ -28,6 +29,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge");
         waitForElement(driver.findElement(By.xpath("//input[@id='PhoneCountryCode']")), "0");
         fortraderPage = new FortradeRPage((AndroidDriver) driver);
+        homePage = new HomePage((AndroidDriver) driver);
     }
 
     @Test
@@ -51,7 +53,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
 
     @Test
     public void unsuccessfullyDemoAccountRegistration() throws IOException {
-        fortraderPage.unsuccessfullyRegistrationWrongData("0000","9999","*+-","asd",
+        fortraderPage.unsuccessfullyRegistrationWrongData("0000", "9999", "*+-", "asd",
                 "pjqyQ");
         fortraderPage.assertErrorMessages();
         fortraderPage.assertColor("Red");
@@ -82,7 +84,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortraderPage.accountRegistration("Testq", "Testa", email, "381", TestData.numberGenerator(),
                 "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above");
         driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/");
-        fortraderPage.firstStepWidget("Testq", "Testa", email,"381", TestData.numberGenerator());
+        fortraderPage.firstStepWidget("Testq", "Testa", email, "381", TestData.numberGenerator());
         fortraderPage.assertPopUpAlreadyRegisteredAccount();
         fortraderPage.takeScreenshot("An already registered email address - FortradeR");
     }
@@ -102,17 +104,17 @@ public class pro_Dark_2024_Lp extends BaseTest {
     protected void anAlreadyRegisteredEmailAndPhone() throws IOException {
         String email = TestData.emailGenerator();
         String phone = TestData.numberGenerator();
-        fortraderPage.accountRegistration("Testq", "Testa", email,"381",
+        fortraderPage.accountRegistration("Testq", "Testa", email, "381",
                 phone, "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above");
         driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/");
-        fortraderPage.firstStepWidget("Testq", "Testa",email, "381", phone);
+        fortraderPage.firstStepWidget("Testq", "Testa", email, "381", phone);
         fortraderPage.assertPopUpAlreadyRegisteredAccount();
         fortraderPage.takeScreenshot("An already registered email and phone - FortradeR");
     }
 
     @Test
     protected void sameFNameAndLName() throws IOException {
-        fortraderPage.firstStepWidget("Testq","Testq",TestData.emailGenerator(),"381",TestData.numberGenerator());
+        fortraderPage.firstStepWidget("Testq", "Testq", TestData.emailGenerator(), "381", TestData.numberGenerator());
         fortraderPage.assertSameNameErrorMsg();
         fortraderPage.takeScreenshot("Error messages for the same first and last name - FortradeR");
     }
@@ -147,7 +149,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         crmPage.takeScreenshot("SMS Verification field Age parameter - no value", crmPage.smsVerification);
         crmPage.checkLinkIdValue("25_34_age,M-android");
         Thread.sleep(1000);
-        crmPage.takeScreenshot( "Age parameter value - FortradeR", crmPage.linkId);
+        crmPage.takeScreenshot("Age parameter value - FortradeR", crmPage.linkId);
         stopWebBrowser();
     }
 
@@ -164,7 +166,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         crmPage.takeScreenshot("SMS Verification field Annual parameter - no value", crmPage.smsVerification);
         crmPage.checkLinkIdValue("15000_50000_annual,M-android");
         Thread.sleep(1000);
-        crmPage.takeScreenshot( "Annual parameter value - FortradeR", crmPage.linkId);
+        crmPage.takeScreenshot("Annual parameter value - FortradeR", crmPage.linkId);
         stopWebBrowser();
     }
 
@@ -178,10 +180,10 @@ public class pro_Dark_2024_Lp extends BaseTest {
         CrmPage crmPage = new CrmPage(chromeDriver);
         crmPage.checkCrmData(email, "Testq Testa", "FSC");
         crmPage.checkSMSVerification("--");
-        crmPage.takeScreenshot("SMS Verification field Saving parameter - no value",crmPage.smsVerification);
+        crmPage.takeScreenshot("SMS Verification field Saving parameter - no value", crmPage.smsVerification);
         crmPage.checkLinkIdValue("50000_100000_savings,M-android");
         Thread.sleep(1000);
-        crmPage.takeScreenshot( "Saving parameter value - FortradeR", crmPage.linkId);
+        crmPage.takeScreenshot("Saving parameter value - FortradeR", crmPage.linkId);
         stopWebBrowser();
     }
 
@@ -198,7 +200,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         crmPage.takeScreenshot("SMS Verification field Knowledge parameter - no value", crmPage.smsVerification);
         crmPage.checkLinkIdValue("knowledge_of_trading_all_the_above,M-android");
         Thread.sleep(1000);
-        crmPage.takeScreenshot( "Knowledge parameter value - FortradeR", crmPage.linkId);
+        crmPage.takeScreenshot("Knowledge parameter value - FortradeR", crmPage.linkId);
         stopWebBrowser();
     }
 
@@ -208,6 +210,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortraderPage.assertUrl(fortraderPage.fscURL);
         fortraderPage.takeScreenshot("Financial Services Commission Mauritius FSC - FortradeR");
     }
+
     @Test
     public void emailIsReceivedSuccessfully() throws IOException, AWTException {
         String email = TestData.emailGenerator();
@@ -223,8 +226,77 @@ public class pro_Dark_2024_Lp extends BaseTest {
         stopWebBrowser();
     }
 
+    @Test
+    public void didNotGetToken() throws InterruptedException, IOException {
+        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=sms-age-annual-saving-knowledge");
+        fortraderPage.tokenIsNotReceived("Testq", "Testa", TestData.emailGenerator(), "381",
+                TestData.numberGenerator(), "25-34", "$15,000-$50,000", "$50,000 – $100,000",
+                "All the above");
+        if (fortraderPage.codeIsSent.isDisplayed()) {
+            Assert.assertEquals(fortraderPage.codeIsSent.getText(), "We sent you the code again");
+            fortraderPage.takeScreenshot("We sent you the code again - FortradeR");
+        }
+    }
+
+    @Test
+    public void userIsReturnedTo1stWidget() throws IOException {
+        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=sms-age-annual-saving-knowledge");
+        fortraderPage.returnToThe1stWidget("Testq", "Testa", TestData.emailGenerator(), "381",
+                TestData.numberGenerator());
+        fortraderPage.takeScreenshot("The user is returned to the 1st form widget - FortradeR");
+    }
+
+    @Test
+    public void emptyDataAccountRegistration() throws IOException {
+        fortraderPage.unsuccessfullyRegistrationWrongData("", "", "", "",
+                "");
+        fortraderPage.assertErrorMessages();
+        fortraderPage.assertColor("red");
+        fortraderPage.takeScreenshot("Demo account registration - no data - FortradeR");
+    }
+
+    @Test
+    public void checkLogoClickability() throws IOException {
+        fortraderPage.clickLogo("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge");
+        fortraderPage.takeScreenshot("Logo is not clickable - FortradeR");
+    }
+
+    @Test
+    public void checkCountryCodeErrorMsg() throws IOException {
+        fortraderPage.firstStepWidget("Testq", "Testa", TestData.emailGenerator(), "/*@#$",
+                TestData.numberGenerator());
+        Assert.assertEquals(fortraderPage.getText(fortraderPage.countryCodeErrorMessage,
+        "Country code field error message : " + fortraderPage.countryCodeErrorMessage.getText()),
+        "Please enter a valid country code");
+        fortraderPage.takeScreenshot("Country code error message - FortradeR");
+    }
+
+    @Test
+    public void checkLoginRedirection() {
+        fortraderPage.clickAlrHaveAnAcc();
+        try {
+            if (driver.getCurrentUrl().contains(fortraderPage.proAppUrl) && homePage.fortradeLogo.isDisplayed()) {
+                fortraderPage.takeScreenshot("Login redirection-user is redirected to the app -FortradeR");
+            }
+        } catch (Exception e) {
+            System.out.println(e + "Wrong link redirection");
+        }
+    }
+
+    @Test
+    public void errorMessageAgeParameter() throws IOException,InterruptedException {
+        String email = TestData.emailGenerator();
+        String phoneNumber = TestData.numberGenerator();
+        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age");
+        fortraderPage.ageParameter("Testq", "Testa", email, "381", phoneNumber,
+                "-- Select --");
+        fortraderPage.secondStepErrorMessage(1);
+        fortraderPage.takeScreenshot("Age parameter error message - FortradeR");
+    }
+
     @AfterMethod
     public void tearDown() {
         stopAppium();
     }
+
 }

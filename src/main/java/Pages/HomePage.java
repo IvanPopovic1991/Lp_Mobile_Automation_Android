@@ -36,6 +36,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[@id='platformRegulation']")
     public WebElement regulationMsg;
 
+    @FindBy(xpath = "//span[text()='Fortrade']")
+    public WebElement fortradeLogo;
+
     public void clickDenyBtn() {
         clickElement(denyBtn, "deny cookies button");
     }

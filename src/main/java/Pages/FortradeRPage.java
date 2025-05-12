@@ -1,6 +1,5 @@
 package Pages;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -8,6 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FortradeRPage extends BasePage {
 
@@ -37,13 +39,13 @@ public class FortradeRPage extends BasePage {
     protected WebElement alrdRegEmailPopUp;
 
     @FindBy(xpath = "(//div[@class='errorValidationIn'])[last()]")
-    protected WebElement countryCodeErrorMessage;
+    public WebElement countryCodeErrorMessage;
 
     @FindBy(xpath = "//header//div[@class='logo']")
-    protected WebElement fortradeLogo;
+    protected WebElement fortradeRLogo;
 
-    @FindBy(xpath = "//div[contains(text(),'Login')]")
-    protected WebElement loginToFortrade;
+    @FindBy(xpath = "//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]")
+    public WebElement alrHaveAccount;
 
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-Age lcFieldWrapper']//select")
     protected WebElement age;
@@ -60,8 +62,8 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//input[@class='ContinueBtn-Submit']")
     protected WebElement continueBtn;
 
-    @FindBy(xpath = "//div[@class='nav-button']")
-    protected WebElement startTradingBtn;
+    @FindBy(xpath = "//input[@id='Details-Edit-Btn']")
+    public WebElement penBtn;
 
     @FindBy(xpath = "//input[@name='Token0']")
     protected WebElement tokenField0;
@@ -77,6 +79,12 @@ public class FortradeRPage extends BasePage {
 
     @FindBy(xpath = "//div[@class='formErrorMessage']")
     public WebElement incorrectTokenMsg;
+
+    @FindBy(xpath = "//input[@class='TokenBack-Button']")
+    protected WebElement didNotGetToken;
+
+    @FindBy(xpath = "//label[@name='SentAgainLabel']")
+    public WebElement codeIsSent;
 
     @FindBy(xpath = "//a[text()=' GB21026472']")
     protected WebElement fscRegulationLink;
@@ -128,7 +136,7 @@ public class FortradeRPage extends BasePage {
     public String howToUnsubscribeURL = "https://www.fortrade.com/wp-content/uploads/legal/How_to_guides/How_to_unsubscribe.pdf";
 
     // Already have an account link
-    public String alrHaveAccount = "https://pro.fortrade.com/";
+    public String proAppUrl = "https://pro.fortrade.com/";
 
     // Privacy policy document Footer link
     public String privacyPolicyFSCFooter = "https://www.fortrade.com/wp-content/uploads/legal/FSC/Fortrade_MA_Privacy_Policy.pdf";
@@ -213,7 +221,7 @@ public class FortradeRPage extends BasePage {
     }
 
     public void unsuccessfullyRegistrationWrongData(String firstNameData, String lastNameData, String emailData, String countryCodeData,
-                                                    String phoneData){
+                                                    String phoneData) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -226,6 +234,14 @@ public class FortradeRPage extends BasePage {
     public void assertErrorMessages() {
         for (int i = 1; i <= 4; i++) {
             Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidationIn'])[position()=number]".replace("number", String.valueOf(i))), "error message " + errorMessages[i - 1]), errorMessages[i - 1]);
+        }
+    }
+
+    public void secondStepErrorMessage(int numberOfParameters) throws InterruptedException {
+        Thread.sleep(2000);
+        for (int i = 1; i <= numberOfParameters; i++) {
+            Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidation'])[position()=number]".replace("number", String.valueOf(i))),
+                    "error message " + "Please select an option from the dropdown list."), "Please select an option from the dropdown list.");
         }
     }
 
@@ -274,8 +290,8 @@ public class FortradeRPage extends BasePage {
     }
 
     public void unsuccessfullyRegistrationWrongSMS(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
-            , String ageData, String annualData, String savingData, String knowledgeData,String tokenField0Value
-            , String tokenField1Value, String tokenField2Value,String tokenField3Value) {
+            , String ageData, String annualData, String savingData, String knowledgeData, String tokenField0Value
+            , String tokenField1Value, String tokenField2Value, String tokenField3Value) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -287,13 +303,13 @@ public class FortradeRPage extends BasePage {
         selectAnnual(annualData);
         selectSaving(savingData);
         selectKnowledge(knowledgeData);
-        incorrectToken(tokenField0Value,tokenField1Value,tokenField2Value,tokenField3Value);
+        incorrectToken(tokenField0Value, tokenField1Value, tokenField2Value, tokenField3Value);
         closeKeyboard();
         clickContinueBtn();
     }
 
     public void firstStepWidget(String firstNameData, String lastNameData, String emailData, String countryCodeData,
-                                String phoneData){
+                                String phoneData) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -303,7 +319,7 @@ public class FortradeRPage extends BasePage {
         clickSubmitBtn();
     }
 
-    public void assertPopUpAlreadyRegisteredAccount(){
+    public void assertPopUpAlreadyRegisteredAccount() {
         Assert.assertEquals(getText(alrdRegEmailPopUp, "alrdRegEmailPopUp"), expTextForPopUp);
     }
 
@@ -359,9 +375,63 @@ public class FortradeRPage extends BasePage {
         clickContinueBtn();
     }
 
-    public void clickFscLink(){
-        clickElement(fscRegulationLink,"Financial Services Commission, Mauritius FSC GB21026472");
+    public void clickDidNotGetToken() {
+        clickElement(didNotGetToken, "Did not get token text");
+    }
+
+    public void clickThePenBtn() {
+        clickElement(penBtn, "pen button on the 2nd step widget");
+    }
+
+    public void tokenIsNotReceived(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String ageData, String annualData, String savingData, String knowledgeData) throws InterruptedException {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectAge(ageData);
+        selectAnnual(annualData);
+        selectSaving(savingData);
+        selectKnowledge(knowledgeData);
+        clickDidNotGetToken();
+        Thread.sleep(2000);
+    }
+
+    public void returnToThe1stWidget(String firstNameData, String lastNameData, String emailData, String countryCodeData
+            , String phoneNumberData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        clickThePenBtn();
+    }
+
+    public void clickFscLink() {
+        clickElement(fscRegulationLink, "Financial Services Commission, Mauritius FSC GB21026472");
         switchToNewWindow();
     }
 
+    public void clickLogo(String url) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(fortradeRLogo));
+            clickElement(fortradeRLogo, "logo");
+            System.out.println("Logo is not clickable");
+        } catch (Exception e) {
+            System.out.println(e + "Logo is clickable");
+        }
+        assertUrl(url);
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        Assert.assertEquals(tabs.size(), 1);
+    }
+
+    public void clickAlrHaveAnAcc(){
+        scrollToElementBy(By.xpath("//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"));
+        clickElement(alrHaveAccount,"An already have an account? link");
+    }
 }
