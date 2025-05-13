@@ -28,13 +28,21 @@ public class BasePage {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
         String className = this.getClass().getSimpleName();
         System.out.println(className);
-        if (!className.equals("HomePage") && !className.equals("BasePage")) {
+        /*if (!className.equals("HomePage") && !className.equals("BasePage")) {
             wait.until(webDriver ->
             {
                 String value = webDriver.findElement(By.xpath("//input[@class='lcField FlavorRegistration']")).getAttribute("value");
                 return "quick".equals(value) || "hasStages".equals(value);
             });
-        }
+        }*/
+    }
+
+    public void getDriver (String url){
+        driver.get(url);
+        wait.until(webDriver -> {
+            String value = webDriver.findElement(By.xpath("//input[@class='lcField FlavorRegistration']")).getAttribute("value");
+            return "quick".equals(value) || "hasStages".equals(value);
+        });
     }
 
     public void clickElement(WebElement element, String log) {

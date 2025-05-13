@@ -59,6 +59,9 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-KnowledgeOfTrading lcFieldWrapper']//select")
     protected WebElement knowledge;
 
+    @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-PreferredLanguage lcFieldWrapper']//select")
+    protected WebElement pLang;
+
     @FindBy(xpath = "//input[@class='ContinueBtn-Submit']")
     protected WebElement continueBtn;
 
@@ -89,32 +92,6 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//a[text()=' GB21026472']")
     protected WebElement fscRegulationLink;
 
-    protected By privacyPolicyLinkBy = By.xpath("//span[@class='MarketingMaterials2']//span[@class='fscClass']//a[text()='Privacy Policy']");
-
-    protected By termsAndConditionsLinkBy = By.xpath("//span[@class='MarketingMaterials2']//span[@class='fscClass']//a[text()=' Terms and Conditions']");
-
-    protected By clickHereLinkBy = By.xpath("//span[@class='MarketingMaterials2']//a[text()='click here']");
-
-    protected By alreadyHaveAnAccountLinkBy = By.xpath("//*[@class='alreadyHaveAcc']//a[contains(text(), 'Already have an account?')]");
-
-    protected By contactUsLinkBy = By.xpath("//*[@class='needHelp']//a[contains(text(), 'Contact Us')]");
-
-    protected By facebookLinkBy = By.xpath("//a[@class='facebook-links']");
-
-    protected By instagramLinkBy = By.xpath("//a[@href='https://www.instagram.com/fortrade_online_trading/?hl=en']");
-
-    protected By youtubeLinkBy = By.xpath("//a[@href='https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg']");
-
-    protected By infoLinkBy = By.xpath("//div[@class='col-md-12 text-center']//a[text()='info@fortrade.com']");
-
-    protected By supportLinkBy = By.xpath("//a[text()='support@fortrade.com']");
-
-    protected By footerRiskWarningLinkBy = By.xpath("//div[@class='footerRiskDisclaimer']//a[contains(text(), 'Risk warning')]");
-
-    protected By footerPrivacyPolicyLinkBy = By.xpath("//div[@class='fscClass']//a[contains(text(),'Privacy policy')]");
-
-    protected By footerPrivacyPolicyFortradeRLinkBy = By.xpath("//div[@class='fscClass']//a[contains(text(), 'Privacy policy')]");
-
     private String expTextForPopUp = "Invalid email. Please try another or proceed to log in. If needed, reset your password in case it's forgotten.";
 
 
@@ -126,20 +103,8 @@ public class FortradeRPage extends BasePage {
     String[] sameNamesErrorMessages = {"Your first name must be different from your last name",
             "Your first name must be different from your last name"};
 
-    // Privacy Policy document link
-    public String privacyPolicyFSC = "https://www.fortrade.com/fortrade-ma-privacy-policy/";
-
-    // Terms and conditions document link
-    public String termsAndConditionsFSC = "https://www.fortrade.com/fortrade-mauritius-client-agreement/";
-
-    //How to unsubscribe document link
-    public String howToUnsubscribeURL = "https://www.fortrade.com/wp-content/uploads/legal/How_to_guides/How_to_unsubscribe.pdf";
-
     // Already have an account link
     public String proAppUrl = "https://pro.fortrade.com/";
-
-    // Privacy policy document Footer link
-    public String privacyPolicyFSCFooter = "https://www.fortrade.com/wp-content/uploads/legal/FSC/Fortrade_MA_Privacy_Policy.pdf";
 
     // Financial Services Commission, Mauritius (FSC) link
     public String fscURL = "https://opr.fscmauritius.org/ords/opr/r/fsc-opr/fsc-online-public-register-opr";
@@ -190,6 +155,10 @@ public class FortradeRPage extends BasePage {
         selectFromDropdown(knowledge, knowledgeData, "Knowledge of trading");
     }
 
+    protected void selectPLang(String pLangData) {
+        selectFromDropdown(pLang, pLangData, "PLang of trading");
+    }
+
     protected void closeKeyboard() {
         driver.hideKeyboard();
     }
@@ -205,7 +174,7 @@ public class FortradeRPage extends BasePage {
     }
 
     public void accountRegistration(String firstNameData, String lastNameData, String emailData, String countryCodeData,
-                                    String phoneData, String ageData, String annualData, String savingData, String knowledgeData) {
+                                    String phoneData, String ageData, String annualData, String savingData, String knowledgeData, String selectPLangData) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -217,6 +186,7 @@ public class FortradeRPage extends BasePage {
         selectAnnual(annualData);
         selectSaving(savingData);
         selectKnowledge(knowledgeData);
+        selectPLang(selectPLangData);
         clickContinueBtn();
     }
 
@@ -234,14 +204,6 @@ public class FortradeRPage extends BasePage {
     public void assertErrorMessages() {
         for (int i = 1; i <= 4; i++) {
             Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidationIn'])[position()=number]".replace("number", String.valueOf(i))), "error message " + errorMessages[i - 1]), errorMessages[i - 1]);
-        }
-    }
-
-    public void secondStepErrorMessage(int numberOfParameters) throws InterruptedException {
-        Thread.sleep(2000);
-        for (int i = 1; i <= numberOfParameters; i++) {
-            Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidation'])[position()=number]".replace("number", String.valueOf(i))),
-                    "error message " + "Please select an option from the dropdown list."), "Please select an option from the dropdown list.");
         }
     }
 
@@ -290,8 +252,8 @@ public class FortradeRPage extends BasePage {
     }
 
     public void unsuccessfullyRegistrationWrongSMS(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
-            , String ageData, String annualData, String savingData, String knowledgeData, String tokenField0Value
-            , String tokenField1Value, String tokenField2Value, String tokenField3Value) {
+            , String ageData, String annualData, String savingData, String knowledgeData, String selectPLangData,String tokenField0Value
+            , String tokenField1Value, String tokenField2Value,String tokenField3Value) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -303,7 +265,8 @@ public class FortradeRPage extends BasePage {
         selectAnnual(annualData);
         selectSaving(savingData);
         selectKnowledge(knowledgeData);
-        incorrectToken(tokenField0Value, tokenField1Value, tokenField2Value, tokenField3Value);
+        selectPLang(selectPLangData);
+        incorrectToken(tokenField0Value,tokenField1Value,tokenField2Value,tokenField3Value);
         closeKeyboard();
         clickContinueBtn();
     }
@@ -375,6 +338,19 @@ public class FortradeRPage extends BasePage {
         clickContinueBtn();
     }
 
+    public void pLangParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String pLangData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectPLang(pLangData);
+        clickContinueBtn();
+    }
+
     public void clickDidNotGetToken() {
         clickElement(didNotGetToken, "Did not get token text");
     }
@@ -412,11 +388,6 @@ public class FortradeRPage extends BasePage {
         clickThePenBtn();
     }
 
-    public void clickFscLink() {
-        clickElement(fscRegulationLink, "Financial Services Commission, Mauritius FSC GB21026472");
-        switchToNewWindow();
-    }
-
     public void clickLogo(String url) {
         try {
             wait.until(ExpectedConditions.visibilityOf(fortradeRLogo));
@@ -433,5 +404,38 @@ public class FortradeRPage extends BasePage {
     public void clickAlrHaveAnAcc(){
         scrollToElementBy(By.xpath("//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"));
         clickElement(alrHaveAccount,"An already have an account? link");
+    }
+
+    public void clickFscLink(){
+        clickElement(fscRegulationLink,"Financial Services Commission, Mauritius FSC GB21026472");
+        switchToNewWindow();
+    }
+
+    public void secondStepErrorMessage(int numberOfParameters) throws InterruptedException {
+        Thread.sleep(2000);
+        for (int i = 1; i <= numberOfParameters; i++) {
+            Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidationIn'])[position()=number]".replace("number", String.valueOf(i))),
+                    "error message " + "Please select an option from the dropdown list."), "Please select an option from the dropdown list.");
+        }
+    }
+
+    public void unsuccessfullyRegistration(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String ageData, String annualData, String savingData, String knowledgeData, String ageDataSelect, String annualDataSelect, String savingDataSelect, String knowledgeDataSelect) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectAge(ageData);
+        selectAge(ageDataSelect);
+        selectAnnual(annualData);
+        selectAnnual(annualDataSelect);
+        selectSaving(savingData);
+        selectSaving(savingDataSelect);
+        selectKnowledge(knowledgeData);
+        selectKnowledge(knowledgeDataSelect);
+        clickContinueBtn();
     }
 }

@@ -9,6 +9,8 @@ import Pages.MailinatorPage;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,6 +19,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.time.Duration;
 
 public class pro_Dark_2024_Lp extends BaseTest {
 
@@ -26,10 +29,10 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @BeforeMethod
     public void setup() throws MalformedURLException, URISyntaxException {
         configureAppium();
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge");
-        waitForElement(driver.findElement(By.xpath("//input[@id='PhoneCountryCode']")), "0");
         fortraderPage = new FortradeRPage((AndroidDriver) driver);
         homePage = new HomePage((AndroidDriver) driver);
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge-plang:all");
+        waitForElement(driver.findElement(By.xpath("//input[@id='PhoneCountryCode']")), "0");
     }
 
     @Test
@@ -39,7 +42,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         ((CanRecordScreen) driver).startRecordingScreen();
         fortraderPage.accountRegistration("Testq", "Testa", TestData.emailGenerator(),
                 "381", TestData.numberGenerator(), "25-34", "$50,000-$100,000",
-                "$50,000 – $100,000", "All the above");
+                "$50,000 – $100,000", "All the above", "Serbian");
         HomePage homePage = new HomePage((AndroidDriver) driver);
         homePage.clickDenyBtn();
         homePage.clickNotResBtn();
@@ -62,9 +65,9 @@ public class pro_Dark_2024_Lp extends BaseTest {
 
     @Test
     public void assertInvalidTokenMsg() throws IOException {
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=sms-age-annual-saving-knowledge");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=sms-age-annual-saving-knowledge-plang:all");
         fortraderPage.unsuccessfullyRegistrationWrongSMS("Testq", "Testa", TestData.emailGenerator(), "381",
-                TestData.numberGenerator(), "25-34", "$15,000-$50,000", "$50,000 – $100,000", "All the above",
+                TestData.numberGenerator(), "25-34", "$15,000-$50,000", "$50,000 – $100,000", "All the above", "Serbian",
                 "1", "1", "1", "1");
         Assert.assertEquals((fortraderPage.incorrectTokenMsg.getText()), "Incorrect Code. Please check and try again.");
         fortraderPage.takeScreenshot("Incorrect code - Please check and try again - FortradeR");
@@ -82,9 +85,9 @@ public class pro_Dark_2024_Lp extends BaseTest {
     protected void anAlreadyRegisteredEmail() throws IOException {
         String email = TestData.emailGenerator();
         fortraderPage.accountRegistration("Testq", "Testa", email, "381", TestData.numberGenerator(),
-                "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above");
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/");
-        fortraderPage.firstStepWidget("Testq", "Testa", email, "381", TestData.numberGenerator());
+                "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above", "Serbian");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/");
+        fortraderPage.firstStepWidget("Testq", "Testa", email,"381", TestData.numberGenerator());
         fortraderPage.assertPopUpAlreadyRegisteredAccount();
         fortraderPage.takeScreenshot("An already registered email address - FortradeR");
     }
@@ -93,8 +96,8 @@ public class pro_Dark_2024_Lp extends BaseTest {
     protected void anAlreadyRegisteredPhone() throws IOException {
         String phone = TestData.numberGenerator();
         fortraderPage.accountRegistration("Testq", "Testa", TestData.emailGenerator(), "381",
-                phone, "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above");
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/");
+                phone, "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above", "Serbian");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/");
         fortraderPage.firstStepWidget("Testq", "Testa", TestData.emailGenerator(), "381", phone);
         fortraderPage.assertPopUpAlreadyRegisteredAccount();
         fortraderPage.takeScreenshot("An already registered phone - FortradeR");
@@ -104,10 +107,10 @@ public class pro_Dark_2024_Lp extends BaseTest {
     protected void anAlreadyRegisteredEmailAndPhone() throws IOException {
         String email = TestData.emailGenerator();
         String phone = TestData.numberGenerator();
-        fortraderPage.accountRegistration("Testq", "Testa", email, "381",
-                phone, "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above");
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/");
-        fortraderPage.firstStepWidget("Testq", "Testa", email, "381", phone);
+        fortraderPage.accountRegistration("Testq", "Testa", email,"381",
+                phone, "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above", "Serbian");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/");
+        fortraderPage.firstStepWidget("Testq", "Testa",email, "381", phone);
         fortraderPage.assertPopUpAlreadyRegisteredAccount();
         fortraderPage.takeScreenshot("An already registered email and phone - FortradeR");
     }
@@ -122,24 +125,25 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @Test
     public void checkingTagsInTheCrm() throws IOException, AWTException {
         String email = TestData.emailGenerator();
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge&tg=ivanA" +
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge-plang:all&tg=ivanA" +
                 "1434&tag1=ivanB@1434&tag2=ivanL1434&tag3=ivanM1434&gid=ivanC@1434&G_GEO=ivanD1434&G_GEOint=ivanE1434&G_" +
                 "Device=ivanF1434&G_DeviceModel=ivanG1434&G_AdPos=ivanH1434&g_Track=ivanI1434&Track=ivanj1434&gclid=ivanK1434");
         fortraderPage.accountRegistration("Testq", "Testa", email, "381",
-                TestData.numberGenerator(), "25-34", "$15,000-$50,000", "$50,000 – $100,000", "All the above");
+                TestData.numberGenerator(), "25-34", "$15,000-$50,000", "$50,000 – $100,000", "All the above", "Serbian");
         startChromeBrowserOnDesktop();
         CrmPage crmPage = new CrmPage(chromeDriver);
         crmPage.checkCrmData(email, "Testq Testa", "FSC");
         crmPage.takeScreenshot("Account details Fortrader page", crmPage.accFullNameCrm);
         crmPage.checkCrmTags();
         crmPage.takeScreenshot("Marketing tags Fortrader page", crmPage.accFullNameCrm);
+        crmPage.checkLinkIdValue("25_34_age,15000_50000_annual,50000_100000_savings,knowledge_of_trading_all_the_above,lang_SR,M-android");
         stopWebBrowser();
     }
 
     @Test
     public void checkingAgeParameter() throws IOException, AWTException, InterruptedException {
         String email = TestData.emailGenerator();
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age");
         fortraderPage.ageParameter("Testq", "Testa", email, "381", TestData.numberGenerator(),
                 "25-34");
         startChromeBrowserOnDesktop();
@@ -156,7 +160,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @Test
     public void checkingAnnualParameter() throws IOException, AWTException, InterruptedException {
         String email = TestData.emailGenerator();
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=annual");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=annual");
         fortraderPage.annualParameter("Testq", "Testa", email, "381", TestData.numberGenerator(),
                 "$15,000-$50,000");
         startChromeBrowserOnDesktop();
@@ -173,7 +177,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @Test
     public void checkingSavingParameter() throws IOException, AWTException, InterruptedException {
         String email = TestData.emailGenerator();
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=saving");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=saving");
         fortraderPage.savingParameter("Testq", "Testa", email, "381", TestData.numberGenerator(),
                 "$50,000 – $100,000");
         startChromeBrowserOnDesktop();
@@ -190,7 +194,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @Test
     public void checkingKnowledgeParameter() throws IOException, AWTException, InterruptedException {
         String email = TestData.emailGenerator();
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=knowledge");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=knowledge");
         fortraderPage.knowledgeParameter("Testq", "Testa", email, "381", TestData.numberGenerator(),
                 "All the above");
         startChromeBrowserOnDesktop();
@@ -201,6 +205,23 @@ public class pro_Dark_2024_Lp extends BaseTest {
         crmPage.checkLinkIdValue("knowledge_of_trading_all_the_above,M-android");
         Thread.sleep(1000);
         crmPage.takeScreenshot("Knowledge parameter value - FortradeR", crmPage.linkId);
+        stopWebBrowser();
+    }
+
+    @Test
+    public void checkingPLangParameter() throws IOException, AWTException, InterruptedException {
+        String email = TestData.emailGenerator();
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=plang:all");
+        fortraderPage.pLangParameter("Testq", "Testa", email, "381", TestData.numberGenerator(),
+                "Serbian");
+        startChromeBrowserOnDesktop();
+        CrmPage crmPage = new CrmPage(chromeDriver);
+        crmPage.checkCrmData(email, "Testq Testa", "FSC");
+        crmPage.checkSMSVerification("--");
+        crmPage.takeScreenshot("SMS Verification field PLang parameter - no value", crmPage.smsVerification);
+        crmPage.checkLinkIdValue("lang_SR,M-android");
+        Thread.sleep(1000);
+        crmPage.takeScreenshot( "PLang parameter value - FortradeR", crmPage.linkId);
         stopWebBrowser();
     }
 
@@ -216,7 +237,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         String email = TestData.emailGenerator();
         fortraderPage.accountRegistration("Testq", "Testa", email,
                 "381", TestData.numberGenerator(), "25-34", "$15,000-$50,000",
-                "$50,000 – $100,000", "All the above");
+                "$50,000 – $100,000", "All the above", "Serbian");
         startChromeBrowserOnDesktop();
         MailinatorPage mailinator = new MailinatorPage(chromeDriver);
         chromeDriver.get("https://www.mailinator.com/");
@@ -257,7 +278,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
 
     @Test
     public void checkLogoClickability() throws IOException {
-        fortraderPage.clickLogo("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge");
+        fortraderPage.clickLogo("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age-annual-saving-knowledge-plang:all");
         fortraderPage.takeScreenshot("Logo is not clickable - FortradeR");
     }
 
@@ -284,14 +305,69 @@ public class pro_Dark_2024_Lp extends BaseTest {
     }
 
     @Test
-    public void errorMessageAgeParameter() throws IOException,InterruptedException {
+    public void errorMessageAgeParameter() throws IOException, AWTException, InterruptedException {
         String email = TestData.emailGenerator();
         String phoneNumber = TestData.numberGenerator();
-        driver.get("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age");
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=age&");
         fortraderPage.ageParameter("Testq", "Testa", email, "381", phoneNumber,
                 "-- Select --");
         fortraderPage.secondStepErrorMessage(1);
         fortraderPage.takeScreenshot("Age parameter error message - FortradeR");
+    }
+
+    @Test
+    public void errorMessageAnnualParameter() throws IOException, AWTException, InterruptedException {
+        String email = TestData.emailGenerator();
+        String phoneNumber = TestData.numberGenerator();
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=annual&");
+        fortraderPage.annualParameter("Testq", "Testa", email, "381", phoneNumber,
+                "-- Select --");
+        fortraderPage.secondStepErrorMessage(1);
+        fortraderPage.takeScreenshot("Annual parameter error message - FortradeR");
+    }
+
+    @Test
+    public void errorMessageSavingParameter() throws IOException, AWTException, InterruptedException {
+        String email = TestData.emailGenerator();
+        String phoneNumber = TestData.numberGenerator();
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=saving&");
+        fortraderPage.savingParameter("Testq", "Testa", email, "381", phoneNumber,
+                "-- Select --");
+        fortraderPage.secondStepErrorMessage(1);
+        fortraderPage.takeScreenshot("Saving parameter error message - FortradeR");
+    }
+
+    @Test
+    public void errorMessageKnowledgeParameter() throws IOException, AWTException, InterruptedException {
+        String email = TestData.emailGenerator();
+        String phoneNumber = TestData.numberGenerator();
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=knowledge&");
+        fortraderPage.knowledgeParameter("Testq", "Testa", email, "381", phoneNumber,
+                "-- Select --");
+        fortraderPage.secondStepErrorMessage(1);
+        fortraderPage.takeScreenshot("Knowledge parameter error message - FortradeR");
+    }
+
+    @Test
+    public void errorMessagePLangParameter() throws IOException, AWTException, InterruptedException {
+        String email = TestData.emailGenerator();
+        String phoneNumber = TestData.numberGenerator();
+        fortraderPage.getDriver("https://www.fortrader.com/minilps/en/pro-dark-2024-dlp/?fts=plang:all&");
+        fortraderPage.pLangParameter("Testq", "Testa", email, "381", phoneNumber,
+                "-- Select --");
+        fortraderPage.secondStepErrorMessage(1);
+        fortraderPage.takeScreenshot("PLang parameter error message - FortradeR");
+    }
+
+    @Test
+    public void errorMessagesAllParameters() throws IOException, AWTException, InterruptedException {
+        String email = TestData.emailGenerator();
+        String phoneNumber = TestData.numberGenerator();
+        fortraderPage.unsuccessfullyRegistration("Testq", "Testa", email, "381", phoneNumber,
+                "25-34", "$15,000-$50,000", "$50,000 – $100,000", "All the above",
+                "-- Select --", "-- Select --", "-- Select --", "-- Select --");
+        fortraderPage.secondStepErrorMessage(4);
+        fortraderPage.takeScreenshot("All parameters error message - FortradeR");
     }
 
     @AfterMethod

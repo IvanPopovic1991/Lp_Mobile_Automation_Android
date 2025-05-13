@@ -16,6 +16,11 @@
                     <include name="checkCountryCodeErrorMsg"/>
                     <include name="checkLoginRedirection"/>
                     <include name="errorMessageAgeParameter"/>
+                    <include name="errorMessageAnnualParameter"/>
+                    <include name="errorMessageSavingParameter"/>
+                    <include name="errorMessageKnowledgeParameter"/>
+                    <include name="errorMessagePLangParameter"/>
+                    <include name="checkingPLangParameter"/>
                 </methods>
             </class>
         </classes>
