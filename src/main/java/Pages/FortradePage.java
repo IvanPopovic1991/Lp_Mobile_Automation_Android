@@ -87,6 +87,9 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-KnowledgeOfTrading lcFieldWrapper']//select")
     protected WebElement knowledge;
 
+    @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-PreferredLanguage lcFieldWrapper']//select")
+    protected WebElement pLang;
+
     @FindBy(xpath = "//input[@class='ContinueBtn-Submit']")
     protected WebElement continueBtn2;
 
@@ -232,6 +235,10 @@ public class FortradePage extends BasePage {
         selectFromDropdown(knowledge, knowledgeData, "Knowledge of trading " + knowledgeData);
     }
 
+    protected void selectPLang(String pLangData) {
+        selectFromDropdown(pLang, pLangData, "PLang " + pLangData);
+    }
+
     public void clickContinueBtn() {
         clickElement(continueBtn, "continue button");
     }
@@ -247,7 +254,7 @@ public class FortradePage extends BasePage {
     }
 
     public void accountRegistration(String firstNameData, String lastNameData, String emailData, String countryCodeData,
-                                    String phoneData, String ageData, String annualData, String savingData, String knowledgeData) {
+                                    String phoneData, String ageData, String annualData, String savingData, String knowledgeData, String selectPLangData) {
         clickDenyBtn();
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
@@ -260,6 +267,7 @@ public class FortradePage extends BasePage {
         selectAnnual(annualData);
         selectSaving(savingData);
         selectKnowledge(knowledgeData);
+        selectPLang(selectPLangData);
         clickContinueBtn();
     }
 
@@ -279,15 +287,6 @@ public class FortradePage extends BasePage {
             Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidationIn'])[position()=number]".replace("number", String.valueOf(i))), "error message " + errorMessages[i - 1]), errorMessages[i - 1]);
         }
     }
-
-    public void secondStepErrorMessage(int numberOfParameters) throws InterruptedException {
-        Thread.sleep(2000);
-        for (int i = 1; i <= numberOfParameters; i++) {
-            Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidation'])[position()=number]".replace("number", String.valueOf(i))),
-                    "error message " + "Please select an option from the dropdown list."), "Please select an option from the dropdown list.");
-        }
-    }
-
 
     public void assertSameNameErrorMsg() {
         for (int i = 1; i <= 2; i++) {
@@ -334,7 +333,7 @@ public class FortradePage extends BasePage {
     }
 
     public void unsuccessfullyRegistrationWrongSMS(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
-            , String ageData, String annualData, String savingData, String knowledgeData, String tokenField0Value
+            , String ageData, String annualData, String savingData, String knowledgeData, String selectPLangData, String tokenField0Value
             , String tokenField1Value, String tokenField2Value, String tokenField3Value) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
@@ -348,6 +347,7 @@ public class FortradePage extends BasePage {
         selectAnnual(annualData);
         selectSaving(savingData);
         selectKnowledge(knowledgeData);
+        selectPLang(selectPLangData);
         incorrectToken(tokenField0Value, tokenField1Value, tokenField2Value, tokenField3Value);
         closeKeyboard();
         clickContinueBtn();
@@ -369,7 +369,7 @@ public class FortradePage extends BasePage {
     }
 
     public void ageParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
-                             ,String ageData) {
+            , String ageData) {
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -383,7 +383,6 @@ public class FortradePage extends BasePage {
 
     public void annualParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
             , String annualData) {
-        clickDenyBtn();
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -397,7 +396,6 @@ public class FortradePage extends BasePage {
 
     public void savingParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
             , String savingData) {
-        clickDenyBtn();
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -411,7 +409,6 @@ public class FortradePage extends BasePage {
 
     public void knowledgeParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
             , String knowledgeData) {
-        clickDenyBtn();
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
@@ -420,6 +417,19 @@ public class FortradePage extends BasePage {
         closeKeyboard();
         clickSubmitBtn();
         selectKnowledge(knowledgeData);
+        clickContinueBtn();
+    }
+
+    public void pLangParameter(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String pLangData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        clickSubmitBtn();
+        selectPLang(pLangData);
         clickContinueBtn();
     }
 
@@ -460,8 +470,8 @@ public class FortradePage extends BasePage {
         clickThePenBtn();
     }
 
-    public void clickFcaLink() {
-        clickElement(fcaRegulationLink, "Financial Conduct Authority (FCA), FRN: 609970. link");
+    public void clickFcaLink(){
+        clickElement(fcaRegulationLink,"Financial Conduct Authority (FCA), FRN: 609970. link");
         switchToNewWindow();
     }
 
@@ -515,5 +525,33 @@ public class FortradePage extends BasePage {
         Assert.assertEquals(getText(returnDisplayedElement(dynamicPercentagesBy), "dynamicPercentages"), textForPercentages);
         scrollToElementBy(staticPercentagesBy);
         Assert.assertEquals(getText(returnDisplayedElement(staticPercentagesBy), "staticPercentages"), textForPercentages);
+    }
+    public void secondStepErrorMessage(int numberOfParameters) throws InterruptedException {
+        Thread.sleep(2000);
+        for (int i = 1; i <= numberOfParameters; i++) {
+            Assert.assertEquals(getTextBy(By.xpath("(//div[@class='errorValidation'])[position()=number]".replace("number", String.valueOf(i))),
+                    "error message " + "Please select an option from the dropdown list."), "Please select an option from the dropdown list.");
+        }
+    }
+
+    public void unsuccessfullyRegistration(String firstNameData, String lastNameData, String emailData, String countryCodeData, String phoneNumberData
+            , String ageData, String annualData, String savingData, String knowledgeData, String ageDataSelect, String annualDataSelect, String savingDataSelect, String knowledgeDataSelect) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        closeKeyboard();
+        //clickDenyBtn();
+        clickSubmitBtn();
+        selectAge(ageData);
+        selectAge(ageDataSelect);
+        selectAnnual(annualData);
+        selectAnnual(annualDataSelect);
+        selectSaving(savingData);
+        selectSaving(savingDataSelect);
+        selectKnowledge(knowledgeData);
+        selectKnowledge(knowledgeDataSelect);
+        clickContinueBtn();
     }
 }
