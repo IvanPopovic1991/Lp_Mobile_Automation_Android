@@ -83,7 +83,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @Parameters({"tag", "countryCode", "regulation"})
     @Test
     protected void assertInvalidTokenMsg(String tag, String countryCode, String regulation) throws IOException {
-        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/" + tag + "&fts=sms-age-annual-saving-knowledge-plang:all");
+        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=sms-age-annual-saving-knowledge-plang:all");
         fortradePage.unsuccessfullyRegistrationWrongSMS("Testq", "Testa", TestData.emailGenerator(), countryCode,
                 TestData.numberGenerator(), "25-34", "$15,000-$50,000", "$50,000 – $100,000", "All the above", "Serbian",
                 "1", "1", "1", "1");
@@ -106,7 +106,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         String email = TestData.emailGenerator();
         fortradePage.accountRegistration("Testq", "Testa", email, countryCode, TestData.numberGenerator(),
                 "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above", "Serbian");
-        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/" + tag);
+        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag);
         fortradePage.firstStepWidget("Testq", "Testa", email, countryCode, TestData.numberGenerator());
         fortradePage.assertPopUpAlreadyRegisteredAccount();
         fortradePage.takeScreenshot("An already registered email address - " + regulation + " regulation");
@@ -118,7 +118,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         String phone = TestData.numberGenerator();
         fortradePage.accountRegistration("Testq", "Testa", TestData.emailGenerator(), countryCode,
                 phone, "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above", "Serbian");
-        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/" + tag);
+        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag);
         fortradePage.firstStepWidget("Testq", "Testa", TestData.emailGenerator(), countryCode, phone);
         fortradePage.assertPopUpAlreadyRegisteredAccount();
         fortradePage.takeScreenshot("An already registered phone - " + regulation + " regulation");
@@ -131,7 +131,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         String phone = TestData.numberGenerator();
         fortradePage.accountRegistration("Testq", "Testa", email, countryCode,
                 phone, "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above", "Serbian");
-        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/" + tag);
+        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag);
         fortradePage.firstStepWidget("Testq", "Testa",email, countryCode, phone);
         fortradePage.assertPopUpAlreadyRegisteredAccount();
         fortradePage.takeScreenshot("An already registered email and phone - " + regulation + " regulation");
@@ -140,7 +140,6 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @Parameters({"countryCode","regulation"})
     @Test
     protected void sameFNameAndLName(String countryCode,String regulation) throws IOException {
-        fortradePage.clickDenyBtn();
         fortradePage.firstStepWidget("Testq","Testq",TestData.emailGenerator(),countryCode,TestData.numberGenerator());
         fortradePage.assertSameNameErrorMsg();
         fortradePage.takeScreenshot("Error messages for the same first and last name - " + regulation + " regulation");
@@ -329,7 +328,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
     @Test
     @Parameters({"tag","countryCode","regulation"})
     public void didNotGetToken(String tag,String countryCode,String regulation) throws InterruptedException, IOException {
-        driver.get("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=sms-age-annual-saving-knowledge");
+        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=sms-age-annual-saving-knowledge");
         fortradePage.tokenIsNotReceived("Testq", "Testa", TestData.emailGenerator(), countryCode,
                 TestData.numberGenerator(), "25-34", "$15,000-$50,000", "$50,000 – $100,000",
                 "All the above");
@@ -378,7 +377,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
 
     @Test
     @Parameters({"regulation"})
-    public void checkLoginRedirection(String regulation) throws IOException {
+    public void checkLoginRedirection(String regulation) {
         fortradePage.clickAlrHaveAnAcc();
         try {
             if (driver.getCurrentUrl().contains(fortradePage.appUrl) && homePage.fortradeLogo.isDisplayed()) {
@@ -401,8 +400,9 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortradePage.takeScreenshot("Age parameter error message - Fortrade - " + regulation);
     }
 
+    @Test
     @Parameters({"tag", "regulation"})
-    public void checkFCAPercentages(String tag, String regulation) throws IOException, AWTException {
+    public void checkFCAPercentages(String tag, String regulation) throws IOException {
         fortradePage.checkPercentages("71% of retail investor accounts lose money when trading CFDs with this provider.");
         try {
             Thread.sleep(500);
@@ -412,8 +412,9 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortradePage.takeScreenshot("Percentages - " + regulation + " regulation");
     }
 
+    @Test
     @Parameters({"tag", "regulation"})
-    public void checkCysecPercentages(String tag, String regulation) throws IOException, AWTException {
+    public void checkCysecPercentages(String tag, String regulation) throws IOException {
         fortradePage.checkPercentages("70.91% of retail investor accounts lose money when trading CFDs with this provider.");
         try {
             Thread.sleep(500);
@@ -425,7 +426,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
 
     @Test
     @Parameters({"tag","countryCode","regulation"})
-    public void errorMessageAnnualParameter(String tag,String countryCode ,String regulation) throws IOException, AWTException, InterruptedException {
+    public void errorMessageAnnualParameter(String tag,String countryCode ,String regulation) throws IOException, InterruptedException {
         String email = TestData.emailGenerator();
         String phoneNumber = TestData.numberGenerator();
         fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?fts=annual&"+tag);
@@ -434,9 +435,10 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortradePage.secondStepErrorMessage(1);
         fortradePage.takeScreenshot("Annual parameter error message - Fortrade - " + regulation + " regulation");
     }
+
     @Test
     @Parameters({"tag","countryCode","regulation"})
-    public void errorMessageSavingParameter(String tag,String countryCode ,String regulation) throws IOException, AWTException, InterruptedException {
+    public void errorMessageSavingParameter(String tag,String countryCode ,String regulation) throws IOException, InterruptedException {
         String email = TestData.emailGenerator();
         String phoneNumber = TestData.numberGenerator();
         fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?fts=saving&"+tag);
@@ -445,9 +447,10 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortradePage.secondStepErrorMessage(1);
         fortradePage.takeScreenshot("Saving parameter error message - Fortrade - " + regulation + " regulation");
     }
+
     @Test
     @Parameters({"tag","countryCode","regulation"})
-    public void errorMessageKnowledgeParameter(String tag,String countryCode ,String regulation) throws IOException, AWTException, InterruptedException {
+    public void errorMessageKnowledgeParameter(String tag,String countryCode ,String regulation) throws IOException, InterruptedException {
         String email = TestData.emailGenerator();
         String phoneNumber = TestData.numberGenerator();
         fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?fts=knowledge&"+tag);
@@ -459,7 +462,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
 
     @Test
     @Parameters({"tag","countryCode","regulation"})
-    public void errorMessagePLangParameter(String tag,String countryCode ,String regulation) throws IOException, AWTException, InterruptedException {
+    public void errorMessagePLangParameter(String tag,String countryCode ,String regulation) throws IOException, InterruptedException {
         String email = TestData.emailGenerator();
         String phoneNumber = TestData.numberGenerator();
         fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?fts=plang:all&"+tag);
@@ -468,9 +471,10 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortradePage.secondStepErrorMessage(1);
         fortradePage.takeScreenshot("PLang parameter error message - Fortrade - " + regulation + " regulation");
     }
+
     @Test
     @Parameters({"countryCode","regulation"})
-    public void errorMessagesAllParameters(String countryCode ,String regulation) throws IOException, AWTException, InterruptedException {
+    public void errorMessagesAllParameters(String countryCode ,String regulation) throws IOException, InterruptedException {
         String email = TestData.emailGenerator();
         String phoneNumber = TestData.numberGenerator();
         fortradePage.unsuccessfullyRegistration("Testq", "Testa", email, countryCode, phoneNumber,

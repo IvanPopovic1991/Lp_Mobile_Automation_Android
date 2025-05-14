@@ -1,29 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="FortradeR landing pages">
-    <!--<listeners>
+    <listeners>
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
-    </listeners>-->
+    </listeners>
     <test name="FortradeR - test cases">
         <classes>
-            <class name="TestsFortradeR.pro_Dark_2024_Lp">
-                <methods>
-                    <include name="emailIsReceivedSuccessfully"/>
-                    <!--<include name="didNotGetToken"/>
-                    <include name="userIsReturnedTo1stWidget"/>
-                    <include name="emptyDataAccountRegistration"/>
-                    <include name="checkLogoClickability"/>
-                    <include name="checkCountryCodeErrorMsg"/>
-                    <include name="checkLoginRedirection"/>
-                    <include name="errorMessageAgeParameter"/>
-                    <include name="errorMessageAnnualParameter"/>
-                    <include name="errorMessageSavingParameter"/>
-                    <include name="errorMessageKnowledgeParameter"/>
-                    <include name="errorMessagePLangParameter"/>
-                    <include name="checkingPLangParameter"/>-->
-                </methods>
-            </class>
+            <class name="TestsFortradeR.pro_Dark_2024_Lp"/>
         </classes>
     </test>
 </suite>

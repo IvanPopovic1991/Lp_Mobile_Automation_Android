@@ -6,8 +6,6 @@ import Pages.*;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -16,7 +14,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.time.Duration;
 
 public class pro_Dark_2024_Lp extends BaseTest {
 
