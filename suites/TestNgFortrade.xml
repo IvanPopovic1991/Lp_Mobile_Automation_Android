@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Fortrade landing pages">
-  <!--<listeners>
+  <listeners>
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
-  </listeners>-->
+  </listeners>
     <test name="Fortrade - test cases - FSC regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=2051&amp;regulation=FSC"/>
         <parameter name="countryCode" value="381"/>
@@ -12,19 +12,12 @@
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="emailIsReceivedSuccessfully"/>
-                    <!--<include name="didNotGetToken"/>
-                    <include name="userIsReturnedTo1stWidget"/>
-                    <include name="emptyDataAccountRegistration"/>
-                    <include name="checkLogoClickability"/>
-                    <include name="checkCountryCodeErrorMsg"/>
-                    <include name="checkLoginRedirection"/>
-                    <include name="errorMessageAgeParameter"/>
-                    <include name="errorMessageAnnualParameter"/>
-                    <include name="errorMessageSavingParameter"/>
-                    <include name="errorMessageKnowledgeParameter"/>
-                    <include name="errorMessagePLangParameter"/>
-                    <include name="checkingPLangParameter"/>-->
+                    <exclude name="checkFcaRedirection"/>
+                    <exclude name="checkIirocRedirection"/>
+                    <exclude name="checkAsicRedirection"/>
+                    <exclude name="checkCysecRedirection"/>
+                    <exclude name="checkFCAPercentages"/>
+                    <exclude name="checkCysecPercentages"/>
                 </methods>
             </class>
         </classes>
@@ -36,19 +29,12 @@
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="emailIsReceivedSuccessfully"/>
-                    <!--<include name="didNotGetToken"/>
-                    <include name="userIsReturnedTo1stWidget"/>
-                    <include name="emptyDataAccountRegistration"/>
-                    <include name="checkLogoClickability"/>
-                    <include name="checkCountryCodeErrorMsg"/>
-                    <include name="checkLoginRedirection"/>
-                    <include name="errorMessageAgeParameter"/>
-                    <include name="errorMessageAnnualParameter"/>
-                    <include name="errorMessageSavingParameter"/>
-                    <include name="errorMessageKnowledgeParameter"/>
-                    <include name="errorMessagePLangParameter"/>
-                    <include name="checkingPLangParameter"/>-->
+                    <include name="assertInvalidTokenMsg"/>
+                    <exclude name="checkFscRedirection"/>
+                    <exclude name="checkIirocRedirection"/>
+                    <exclude name="checkAsicRedirection"/>
+                    <exclude name="checkCysecRedirection"/>
+                    <exclude name="checkCysecPercentages"/>
                 </methods>
             </class>
         </classes>
@@ -60,19 +46,12 @@
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="emailIsReceivedSuccessfully"/>
-                    <!--<include name="didNotGetToken"/>
-                    <include name="userIsReturnedTo1stWidget"/>
-                    <include name="emptyDataAccountRegistration"/>
-                    <include name="checkLogoClickability"/>
-                    <include name="checkCountryCodeErrorMsg"/>
-                    <include name="checkLoginRedirection"/>
-                    <include name="errorMessageAgeParameter"/>
-                    <include name="errorMessageAnnualParameter"/>
-                    <include name="errorMessageSavingParameter"/>
-                    <include name="errorMessageKnowledgeParameter"/>
-                    <include name="errorMessagePLangParameter"/>
-                    <include name="checkingPLangParameter"/>-->
+                    <exclude name="checkFscRedirection"/>
+                    <exclude name="checkFcaRedirection"/>
+                    <exclude name="checkFCAPercentages"/>
+                    <exclude name="checkAsicRedirection"/>
+                    <exclude name="checkCysecRedirection"/>
+                    <exclude name="checkCysecPercentages"/>
                 </methods>
             </class>
         </classes>
@@ -84,34 +63,28 @@
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    <include name="emailIsReceivedSuccessfully"/>
-                    <!--<include name="didNotGetToken"/>
-                    <include name="userIsReturnedTo1stWidget"/>
-                    <include name="emptyDataAccountRegistration"/>
-                    <include name="checkLogoClickability"/>
-                    <include name="checkCountryCodeErrorMsg"/>
-                    <include name="checkLoginRedirection"/>
-                    <include name="errorMessageAgeParameter"/>
-                    <include name="errorMessageAnnualParameter"/>
-                    <include name="errorMessageSavingParameter"/>
-                    <include name="errorMessageKnowledgeParameter"/>
-                    <include name="errorMessagePLangParameter"/>
-                    <include name="checkingPLangParameter"/>-->
+                    <exclude name="checkFscRedirection"/>
+                    <exclude name="checkFcaRedirection"/>
+                    <exclude name="checkFCAPercentages"/>
+                    <exclude name="checkCysecRedirection"/>
+                    <exclude name="checkCysecPercentages"/>
+                    <exclude name="emailIsReceivedSuccessfully"/>
                 </methods>
             </class>
         </classes>
     </test>
-<!--    <test name="Fortrade - test cases - Cysec regulation">
+    <test name="Fortrade - test cases - Cysec regulation">
         <parameter name="tag" value="?tg=skip&amp;G_GEO=1000997&amp;regulation=CYSEC"/>
         <parameter name="regulation" value="cysec"/>
         <classes>
             <class name="TestsFortrade.pro_Dark_2024_Lp">
                 <methods>
-                    &lt;!&ndash;<include name="checkLogoClickability"/>
+                    <include name="checkLogoClickability"/>
                     <include name="checkLoginRedirection"/>
-                    <include name="checkCysecPercentages"/>&ndash;&gt;
+                    <include name="checkCysecPercentages"/>
+                    <include name="checkCysecRedirection"/>
                 </methods>
             </class>
         </classes>
-    </test>-->
+    </test>
 </suite>

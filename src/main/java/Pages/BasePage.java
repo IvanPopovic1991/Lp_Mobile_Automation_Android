@@ -9,13 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Set;
 import java.util.List;
-import java.util.Objects;
 
 public class BasePage {
 
@@ -39,10 +37,20 @@ public class BasePage {
 
     public void getDriver (String url){
         driver.get(url);
-        wait.until(webDriver -> {
-            String value = webDriver.findElement(By.xpath("//input[@class='lcField FlavorRegistration']")).getAttribute("value");
-            return "quick".equals(value) || "hasStages".equals(value);
-        });
+        if (url.contains("sms")){
+            try {
+                Thread.sleep(3000);
+                System.out.println("Waited 3 seconds.");
+            } catch (Exception e){
+                System.out.println(e);
+            }
+        } else {
+            wait.until(webDriver -> {
+                String value = webDriver.findElement(By.xpath("//input[@class='lcField FlavorRegistration']")).getAttribute("value");
+                return "quick".equals(value) || "hasStages".equals(value);
+            });
+            System.out.println("Waited value to contains either quick or hasStages.");
+        }
     }
 
     public void clickElement(WebElement element, String log) {
@@ -86,7 +94,6 @@ public class BasePage {
             System.out.println("Scrolled to the " + log + " element");
         }
     }
-
 
     public void scrollToElementBy (By elementBy){
         JavascriptExecutor js = (JavascriptExecutor) driver;
