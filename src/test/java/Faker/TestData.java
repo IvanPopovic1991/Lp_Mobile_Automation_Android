@@ -9,7 +9,7 @@ public class TestData {
     }
 
     public static String emailGenerator() {
-        return "test" + System.currentTimeMillis() + "@mailinator.com";
+        return "test" + System.currentTimeMillis() + "@yopmail.com";
     }
 
     public static String numberGenerator() {

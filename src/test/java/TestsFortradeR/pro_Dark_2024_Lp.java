@@ -2,10 +2,7 @@ package TestsFortradeR;
 
 import ConfigureAppium.BaseTest;
 import Faker.TestData;
-import Pages.CrmPage;
-import Pages.FortradeRPage;
-import Pages.HomePage;
-import Pages.MailinatorPage;
+import Pages.*;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
@@ -232,7 +229,8 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortraderPage.takeScreenshot("Financial Services Commission Mauritius FSC - FortradeR");
     }
 
-    @Test
+    //This method is for Mailinator (now it's not working, so we use Yopmail)
+    /*@Test
     public void emailIsReceivedSuccessfully() throws IOException, AWTException {
         String email = TestData.emailGenerator();
         fortraderPage.accountRegistration("Testq", "Testa", email,
@@ -244,6 +242,21 @@ public class pro_Dark_2024_Lp extends BaseTest {
         mailinator.findEmail(email);
         mailinator.zoomOutMethod();
         mailinator.takeScreenshot("Email is received successfully - FortradeR", mailinator.emailTitle);
+        stopWebBrowser();
+    }*/
+
+    @Test
+    public void emailIsReceivedSuccessfully() throws IOException, AWTException {
+        String email = TestData.emailGenerator();
+        fortraderPage.accountRegistration("Testq", "Testa", email,
+                "381", TestData.numberGenerator(), "25-34", "$15,000-$50,000",
+                "$50,000 – $100,000", "All the above", "Serbian");
+        startChromeBrowserOnDesktop();
+        YopMail yopMail = new YopMail(chromeDriver);
+        chromeDriver.get("https://yopmail.com/en/");
+        yopMail.findEmail(email);
+        yopMail.zoomOutMethod();
+        yopMail.takeScreenshot("Email is received successfully - FortradeR", yopMail.emailTitle);
         stopWebBrowser();
     }
 
