@@ -294,8 +294,9 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortradePage.assertUrl(fortradePage.fscURL);
         fortradePage.takeScreenshot("Financial Services Commission Mauritius FSC - regulation");
     }
-  
-    @Test
+
+    //This method is for Mailinator (now it's not working, so we use Yopmail)
+    /*@Test
     @Parameters({"regulation", "countryCode"})
     public void emailIsReceivedSuccessfully(String regulation, String countryCode) throws IOException, AWTException {
         String email = TestData.emailGenerator();
@@ -307,6 +308,21 @@ public class pro_Dark_2024_Lp extends BaseTest {
         mailinator.findEmail(email);
         mailinator.zoomOutMethod();
         mailinator.takeScreenshot("Email is received successfully - " + regulation + " regulation", mailinator.emailTitle);
+        stopWebBrowser();
+    }*/
+
+    @Test
+    @Parameters({"regulation", "countryCode"})
+    public void emailIsReceivedSuccessfully(String regulation, String countryCode) throws IOException, AWTException {
+        String email = TestData.emailGenerator();
+        fortradePage.accountRegistration("Testq", "Testa", email, countryCode, TestData.numberGenerator(),
+                "25-34", "$15,000-$50,000", "$50,000 – $100,000", "All the above", "Serbian");
+        startChromeBrowserOnDesktop();
+        YopMail yopMail = new YopMail(chromeDriver);
+        chromeDriver.get("https://yopmail.com/en/");
+        yopMail.findEmail(email);
+        yopMail.zoomOutMethod();
+        yopMail.takeScreenshot("Email is received successfully - " + regulation + " regulation");
         stopWebBrowser();
     }
 

@@ -1,8 +1,6 @@
 package Pages;
 
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -13,13 +11,15 @@ import org.testng.Assert;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
-public class MailinatorPage {
+public class YopMail {
     /**
      * PageFactory- koristi se za direktno kreiranje web elemenata. Omogucava nam da sacuvamo veb element bez koricenja
      * chromeDriver.findElement(); Locira elemente na prvi poziv elementa za razliku od chromeDriver.findElement-a koji bi prijavljivao
@@ -31,19 +31,34 @@ public class MailinatorPage {
 
     public WebDriver chromeDriver;
     public WebDriverWait wait;
-    public MailinatorPage(WebDriver chromeDriver) {
+    public YopMail(WebDriver chromeDriver) {
         this.chromeDriver = chromeDriver;
         this.wait = new WebDriverWait(chromeDriver, Duration.ofSeconds(10));
         PageFactory.initElements(chromeDriver,this);
     }
-    @FindBy(xpath = "//input[@id='search']")
+    @FindBy(xpath = "//input[@class='ycptinput']")
     public WebElement search;
 
-    @FindBy(xpath = "//button[contains(text(),'GO')]")
+    @FindBy(xpath = "//div[@id='refreshbut']")
     public WebElement goBtn;
 
-    @FindBy(xpath = "//td[contains(text(),'Fortrade')][1]")
+    @FindBy(xpath = "//iframe[@id='ifinbox']")
+    public WebElement inboxFrame;
+
+    @FindBy(xpath = "//iframe[@id='ifmail']")
+    public WebElement mailFrame;
+
+    @FindBy(xpath = "//div[@class='lmfd']/span[contains(text(), 'Fortrade')]")
     public WebElement emailMessage;
+
+    @FindBy(xpath = "//button[@id='refresh']")
+    public WebElement refreshEmailBtn;
+
+    @FindBy(xpath = "//span[contains(text(), 'Fortrade <ftadmin@fortrade.com>')]")
+    public WebElement fortradeEmail;
+
+    @FindBy(xpath = "//tr/td/b[contains(text(), 'Testq')]")
+    public WebElement testqName;
 
     @FindBy(xpath = "//td[contains(text(),'KapitalRS')][1]")
     public WebElement emailMessageKRS;
@@ -82,13 +97,47 @@ public class MailinatorPage {
         }
     }
 
+    public String getText(WebElement element, String log) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+
+            System.out.println("Get text from " + log + " element");
+            return element.getText();
+        } catch (StaleElementReferenceException e) {
+
+            System.out.println("Get text from " + log + " element");
+            return element.getText();
+        }
+    }
+
 
     public void findEmail(String emailValue){
         typeText(search,emailValue,"search input");
-        clickElement(goBtn,"go button");
+        clickElement(goBtn,"go button");/*
         wait.until(ExpectedConditions.visibilityOf(emailMessage));
-        wait.until(ExpectedConditions.elementToBeClickable(emailMessage));
+        wait.until(ExpectedConditions.elementToBeClickable(emailMessage));*/
+        for (int i = 0; i < 3; i++) {
+            try {
+                chromeDriver.switchTo().frame(inboxFrame);
+                //WebElement emailMessage = chromeDriver.findElement(By.xpath("//div[@class='lmfd']/span[contains(text(), 'Fortrade')]"));
+                if (emailMessage.isDisplayed()) {
+                    break; // Exit loop when message appears
+                }
+            } catch (NoSuchElementException e) {
+                // Do nothing — element not yet found
+                if (i==2){
+                    Assert.fail("An email is not found after 3 tries!!!");
+                }
+            }
+
+            chromeDriver.switchTo().defaultContent();
+            clickElement(refreshEmailBtn, "refresh email inbox");
+        }
         clickElement(emailMessage,"received message in mailbox");
+        chromeDriver.switchTo().defaultContent();
+        chromeDriver.switchTo().frame(mailFrame);
+        Assert.assertEquals(getText(fortradeEmail, "getting fortrade email"), "Fortrade <ftadmin@fortrade.com>");
+        Assert.assertEquals(getText(testqName, "getting Testq name"), "Testq");
     }
 
     public void findEmailKRS(String emailValue){

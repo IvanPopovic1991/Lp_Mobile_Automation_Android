@@ -255,7 +255,7 @@ public class FortradePage extends BasePage {
 
     public void accountRegistration(String firstNameData, String lastNameData, String emailData, String countryCodeData,
                                     String phoneData, String ageData, String annualData, String savingData, String knowledgeData, String selectPLangData) {
-        clickDenyBtn();
+        //clickDenyBtn();
         enterFirstName(firstNameData);
         enterLastName(lastNameData);
         enterEmail(emailData);
