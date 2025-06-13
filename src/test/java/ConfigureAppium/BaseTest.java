@@ -104,7 +104,7 @@ public class BaseTest {
 
     public void startChromeBrowserOnDesktop(){
         stopAppium();
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver135.exe");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver137.exe");
         String filePath = System.getenv("ChromeExeFilePath");
         ChromeOptions options = new ChromeOptions();
         options.setBinary(filePath);

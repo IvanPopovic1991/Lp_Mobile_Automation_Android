@@ -5,9 +5,9 @@
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
     </listeners>
-    <test name="FortradeR euro dollar trading dlp page - test cases">
+    <test name="FortradeR golden bull dlp page - test cases">
         <classes>
-            <class name="TestsFortradeR.euro_dollar_trading_dlp"/>
+            <class name="TestsFortradeR.golden_bull_dlp"/>
         </classes>
     </test>
 </suite>
