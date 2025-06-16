@@ -42,16 +42,16 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "//input[@id='Phone']")
     protected WebElement phoneNumber;
 
-    @FindBy(xpath = "//div[@Name='Send']")
+    @FindBy(xpath = "//input[@name='Send']")
     protected WebElement submitButton;
 
-    @FindBy(xpath = "//div[@Name='SendTermsAgreementAsic']")
+    @FindBy(xpath = "//input[@name='SendTermsAgreementAsic']")
     protected WebElement submitBtnAsic;
 
     @FindBy(xpath = "//button[@id='CybotCookiebotDialogBodyButtonDecline']")
     protected WebElement denyBtn;
 
-    @FindBy(xpath = "//div[@name='ContinueBtn']")
+    @FindBy(xpath = "//input[@class='ContinueBtn-Submit']")
     protected WebElement continueBtn;
 
     @FindBy(xpath = "//div[@data-cmd='menu']")

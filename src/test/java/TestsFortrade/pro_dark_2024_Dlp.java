@@ -2,11 +2,10 @@ package TestsFortrade;
 
 import ConfigureAppium.BaseTest;
 import Faker.TestData;
-
 import Pages.CrmPage;
 import Pages.FortradePage;
 import Pages.HomePage;
-import Pages.*;
+import Pages.YopMail;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.openqa.selenium.By;
@@ -18,13 +17,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.time.Duration;
 
-public class pro_Dark_2024_Lp extends BaseTest {
+public class pro_dark_2024_Dlp extends BaseTest {
 
     FortradePage fortradePage;
     HomePage homePage;
@@ -37,7 +37,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         homePage = new HomePage((AndroidDriver) driver);
         fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=age-annual-saving-knowledge-plang:all");
         waitForElement(driver.findElement(By.xpath("//input[@id='PhoneCountryCode']")), "0");
-        fortradePage.clickDenyBtn();
+        //fortradePage.clickDenyBtn();
     }
     
     @AfterMethod
@@ -55,7 +55,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
                 countryCode, TestData.numberGenerator(), "25-34", "$50,000-$100,000",
                 "$50,000 – $100,000", "All the above", "Serbian");
         HomePage homePage = new HomePage((AndroidDriver) driver);
-        homePage.clickDenyBtn();
+        //homePage.clickDenyBtn();
         homePage.clickUsePassBtn();
         if (regulation.equals("iiroc")) {
             homePage.closePersonalizeYourContent();
@@ -106,7 +106,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         String email = TestData.emailGenerator();
         fortradePage.accountRegistration("Testq", "Testa", email, countryCode, TestData.numberGenerator(),
                 "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above", "Serbian");
-        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag);
+        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=age-annual-saving-knowledge-plang:all");
         fortradePage.firstStepWidget("Testq", "Testa", email, countryCode, TestData.numberGenerator());
         fortradePage.assertPopUpAlreadyRegisteredAccount();
         fortradePage.takeScreenshot("An already registered email address - " + regulation + " regulation");
@@ -124,6 +124,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         fortradePage.takeScreenshot("An already registered phone - " + regulation + " regulation");
     }
 
+    // Current behavior is - The user can register demo account using the same phone number
     @Parameters({"countryCode", "tag", "regulation"})
     @Test
     protected void anAlreadyRegisteredEmailAndPhone(String countryCode, String tag, String regulation) throws IOException {
@@ -131,7 +132,7 @@ public class pro_Dark_2024_Lp extends BaseTest {
         String phone = TestData.numberGenerator();
         fortradePage.accountRegistration("Testq", "Testa", email, countryCode,
                 phone, "25-34", "$50,000-$100,000", "$50,000 – $100,000", "All the above", "Serbian");
-        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag);
+        fortradePage.getDriver("https://www.fortrade.com/minilps/en/pro-dark-2024-dlp/?" + tag + "&fts=age-annual-saving-knowledge-plang:all");
         fortradePage.firstStepWidget("Testq", "Testa",email, countryCode, phone);
         fortradePage.assertPopUpAlreadyRegisteredAccount();
         fortradePage.takeScreenshot("An already registered email and phone - " + regulation + " regulation");
