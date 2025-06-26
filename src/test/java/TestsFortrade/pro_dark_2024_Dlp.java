@@ -43,6 +43,7 @@ public class pro_dark_2024_Dlp extends BaseTest {
     @AfterMethod
     protected void tearDown() {
         stopAppium();
+        stopWebBrowser();
     }
 
     @Parameters({"countryCode", "regulation"})

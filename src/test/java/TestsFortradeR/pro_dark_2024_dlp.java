@@ -387,6 +387,7 @@ public class pro_dark_2024_dlp extends BaseTest {
     @AfterMethod
     public void tearDown() {
         stopAppium();
+        stopWebBrowser();
     }
 
 }

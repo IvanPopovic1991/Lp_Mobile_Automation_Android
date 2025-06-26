@@ -136,6 +136,11 @@ public class FortradeRPage extends BasePage {
     }
 
     protected void clickSubmitBtn() {
+        try {
+            driver.hideKeyboard();
+        } catch (Exception e){
+            System.out.println(e);
+        }
         clickElement(submitButton, "Submit button");
     }
 
@@ -164,6 +169,11 @@ public class FortradeRPage extends BasePage {
     }
 
     protected void clickContinueBtn() {
+        try {
+            driver.hideKeyboard();
+        } catch (Exception e){
+            System.out.println(e);
+        }
         clickElement(continueBtn, "continue button");
     }
 
@@ -188,6 +198,29 @@ public class FortradeRPage extends BasePage {
         selectKnowledge(knowledgeData);
         selectPLang(selectPLangData);
         clickContinueBtn();
+    }
+
+    public void ftsQueryParameter(String url, String firstNameData, String lastNameData, String emailData, String countryCodeData,
+                                  String phoneNumberData, String ageData, String annualData, String savingData, String knowledgeData, String languageData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        /*clickDenyBtn();*/
+        clickSubmitBtn();
+        selectAge(ageData);
+        selectAnnual(annualData);
+        selectSaving(savingData);
+        selectKnowledge(knowledgeData);
+        if (url.contains("plang:all")){
+            selectPLang(languageData);
+        }
+        clickContinueBtn();
+        /*clickDenyBtn();
+        clickNotSerbResBtn();
+        clickUsePassBtn();
+        clickMenuBtn();*/
     }
 
     public void unsuccessfullyRegistrationWrongData(String firstNameData, String lastNameData, String emailData, String countryCodeData,
