@@ -1,9 +1,6 @@
 package Pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -15,6 +12,8 @@ import org.testng.Assert;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +27,9 @@ public class CrmPage {
         this.wait = new WebDriverWait(chromeDriver, Duration.ofSeconds(10));
         PageFactory.initElements(chromeDriver,this);
     }
+
+    @FindBy(xpath = "//div[@id='lv_custom_tag']")
+    WebElement customTag;
 
     @FindBy(xpath = "//input[@id='userNameInput']")
     public WebElement usernameCrm;
@@ -182,6 +184,13 @@ public class CrmPage {
         ImageIO.write(screenFullImage, "PNG", new File("src/screenshots/" + fileName + ".png"));
     }
 
+    public void scrollToAnElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) chromeDriver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+        js.executeScript("window.scrollBy(0,300);");
+        System.out.println("Scrolled to the " + element.getText());
+    }
+
     public void logInCrm(String username, String password) {
         typeText(usernameCrm, username, "username for CRM");
         typeText(passwordCrm, password, "password for CRM");
@@ -238,6 +247,20 @@ public class CrmPage {
         clickElement(menuBtn, "menu button");
         clickElement(envAndMarSec, "environment and marketing section button");
         loopForTagsCrm();
+    }
+
+    public void checkCrmFtsQuery(String value){
+        clickElement(menuBtn, "menu button");
+        clickElement(envAndMarSec, "environment and marketing section button");
+        String customTagText = readAttribute(customTag, "title", "tag");
+        System.out.println("This is the value of the " + customTag + ": " + customTagText);
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        scrollToAnElement(customTag);
+        Assert.assertEquals(customTagText, value);
     }
 
     public void checkSMSVerification(String smsVerificationValue) {

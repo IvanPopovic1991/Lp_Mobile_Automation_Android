@@ -20,14 +20,13 @@ import java.util.Base64;
 
 public class BaseTest {
 
-    protected AppiumDriver driver;
-    protected ChromeDriver chromeDriver;
+    public AppiumDriver driver;
+    public ChromeDriver chromeDriver;
     protected AppiumDriverLocalService service;
 
     String chromeDriverFile = System.getenv("ChromeDriverExeFilePath");
 
     public void configureAppium() throws URISyntaxException, MalformedURLException {
-        stopWebBrowser();
         /*// Start Appium server
         service = new AppiumServiceBuilder()
                 .withAppiumJS(new File("C://Users//newUser//AppData//Roaming//npm//node_modules//appium//build//lib//main.js"))
@@ -39,7 +38,7 @@ public class BaseTest {
         // Set up capabilities
         UiAutomator2Options options = new UiAutomator2Options();
         options.setCapability("platformName", "Android");
-        options.setCapability("deviceName", "ZY22F7G98K"/*"inpb95xslj7p9lpb"*/);
+        options.setCapability("deviceName", /*"ZY22F7G98K"*/"inpb95xslj7p9lpb");
         options.setCapability("automationName", "UiAutomator2");
         options.setCapability("noReset", true);
         options.setCapability("appium:browserName", "chrome");
@@ -121,7 +120,7 @@ public class BaseTest {
         service.stop();*/
     }
 
-    public void stopWebBrowser(){
+    public void stopWebBrowser() {
         if (chromeDriver != null) {
             chromeDriver.quit();
             chromeDriver = null;

@@ -212,6 +212,11 @@ public class FortradePage extends BasePage {
     }
 
     protected void clickSubmitBtn() {
+        try {
+            driver.hideKeyboard();
+        } catch (Exception e){
+            System.out.println(e);
+        }
         if (submitButton.isDisplayed()) {
             clickElement(submitButton, "Submit button");
         } else {
@@ -240,11 +245,20 @@ public class FortradePage extends BasePage {
     }
 
     public void clickContinueBtn() {
+        try {
+            driver.hideKeyboard();
+        } catch (Exception e){
+            System.out.println(e);
+        }
         clickElement(continueBtn, "continue button");
     }
 
     public void closeKeyboard() {
-        driver.hideKeyboard();
+        try {
+            driver.hideKeyboard();
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     public void assertUrl(String url) {
@@ -268,6 +282,27 @@ public class FortradePage extends BasePage {
         selectKnowledge(knowledgeData);
         selectPLang(selectPLangData);
         clickContinueBtn();
+    }
+
+    public void ftsQueryParameter(String url, String firstNameData, String lastNameData, String emailData, String countryCodeData,
+                                  String phoneNumberData, String ageData, String annualData, String savingData, String knowledgeData, String languageData) {
+        enterFirstName(firstNameData);
+        enterLastName(lastNameData);
+        enterEmail(emailData);
+        enterCountryCode(countryCodeData);
+        enterPhone(phoneNumberData);
+        /*clickDenyBtn();*/
+        clickSubmitBtn();
+        selectAge(ageData);
+        selectAnnual(annualData);
+        selectSaving(savingData);
+        selectKnowledge(knowledgeData);
+        if (url.contains("plang:all")){
+            selectPLang(languageData);
+        }
+        clickContinueBtn();
+//        /*clickDenyBtn();*/
+//        clickUsePassBtn();
     }
 
     public void unsuccessfullyRegistrationWrongData(String firstNameData, String lastNameData, String emailData, String countryCodeData,
