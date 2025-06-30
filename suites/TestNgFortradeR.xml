@@ -7,7 +7,7 @@
     </listeners>
     <test name="FortradeR new day trading 2025 dlp page - test cases">
         <classes>
-            <class name="TestsFortradeR.cryptoPurpleDlp">
+            <class name="TestsFortradeR.commodities2DarkNewLongDlp">
             </class>
         </classes>
     </test>
