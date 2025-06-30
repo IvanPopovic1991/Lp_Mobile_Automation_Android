@@ -5,63 +5,65 @@
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
     </listeners>
-    <!--<test name="Fortrade crypto purple dlp page - test cases - FSC regulation">
+    <test name="Fortrade commodities 2 dark new long dlp page - test cases - FSC regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=2051&amp;regulation=FSC"/>
         <parameter name="countryCode" value="381"/>
         <parameter name="regulation" value="FSC"/>
         <classes>
-            <class name="TestsFortrade.cryptoPurpleDlp">
-                <methods>
+            <class name="TestsFortrade.commodities2DarkNewLongDlp">
+                <methods><!--
                     <exclude name="checkFcaRedirection"/>
                     <exclude name="checkIirocRedirection"/>
                     <exclude name="checkAsicRedirection"/>
                     <exclude name="checkCysecRedirection"/>
                     <exclude name="checkFCAPercentages"/>
-                    <exclude name="checkCysecPercentages"/>
+                    <exclude name="checkCysecPercentages"/>-->
+                    <include name="emailIsReceivedSuccessfully"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="Fortrade crypto purple dlp page - test cases - FCA regulation">
+    <test name="Fortrade commodities 2 dark new long dlp page - test cases - FCA regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=1006453&amp;regulation=FCA"/>
         <parameter name="countryCode" value="44"/>
         <parameter name="regulation" value="FCA"/>
         <classes>
-            <class name="TestsFortrade.cryptoPurpleDlp">
-                <methods>
+            <class name="TestsFortrade.commodities2DarkNewLongDlp">
+                <methods><!--
                     <exclude name="checkFscRedirection"/>
                     <exclude name="checkIirocRedirection"/>
                     <exclude name="checkAsicRedirection"/>
                     <exclude name="checkCysecRedirection"/>
-                    <exclude name="checkCysecPercentages"/>
+                    <exclude name="checkCysecPercentages"/>-->
+                    <include name="emailIsReceivedSuccessfully"/>
+                    <include name="checkingAgeParameter"/>
                 </methods>
             </class>
         </classes>
-    </test>-->
-    <test name="Fortrade crypto purple dlp page - test cases - Iiroc regulation">
+    </test>
+    <test name="Fortrade commodities 2 dark new long dlp page - test cases - Iiroc regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=9077369&amp;regulation=IIROC"/>
         <parameter name="countryCode" value="1"/>
         <parameter name="regulation" value="iiroc"/>
         <classes>
-            <class name="TestsFortrade.cryptoPurpleDlp">
-                <methods><!--
+            <class name="TestsFortrade.commodities2DarkNewLongDlp">
+                <methods>
                     <exclude name="checkFscRedirection"/>
                     <exclude name="checkFcaRedirection"/>
                     <exclude name="checkFCAPercentages"/>
                     <exclude name="checkAsicRedirection"/>
                     <exclude name="checkCysecRedirection"/>
-                    <exclude name="checkCysecPercentages"/>-->
-                    <include name="checkingInvalidFtsQueryInTheCrm"/>
+                    <exclude name="checkCysecPercentages"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="Fortrade crypto purple dlp page - test cases - Asic regulation">
+    <test name="Fortrade commodities 2 dark new long dlp page - test cases - Asic regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=1000142&amp;regulation=ASIC"/>
         <parameter name="countryCode" value="61"/>
         <parameter name="regulation" value="Asic"/>
         <classes>
-            <class name="TestsFortrade.cryptoPurpleDlp">
+            <class name="TestsFortrade.commodities2DarkNewLongDlp">
                 <methods>
                     <exclude name="checkFscRedirection"/>
                     <exclude name="checkFcaRedirection"/>
@@ -72,11 +74,11 @@
             </class>
         </classes>
     </test>
-    <test name="Fortrade crypto purple dlp page - test cases - Cysec regulation">
+    <test name="Fortrade commodities 2 dark new long dlp page - test cases - Cysec regulation">
         <parameter name="tag" value="?tg=skip&amp;G_GEO=1000997&amp;regulation=CYSEC"/>
         <parameter name="regulation" value="cysec"/>
         <classes>
-            <class name="TestsFortrade.cryptoPurpleDlp">
+            <class name="TestsFortrade.commodities2DarkNewLongDlp">
                 <methods>
                     <include name="checkLogoClickability"/>
                     <include name="checkLoginRedirection"/>
