@@ -5,9 +5,9 @@
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
     </listeners>
-    <test name="FortradeR day trading regular bright dlp page - test cases">
+    <test name="FortradeR day trading woman 2025 dlp page - test cases">
         <classes>
-            <class name="TestsFortradeR.dayTradingRegularBrightDlp"/>
+            <class name="TestsFortradeR.dayTradingWoman2025Dlp"/>
         </classes>
     </test>
 </suite>
