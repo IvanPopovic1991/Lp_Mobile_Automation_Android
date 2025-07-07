@@ -155,7 +155,7 @@ public class FortradePage extends BasePage {
     protected String howToUnsubscribeURL = "https://www.fortrade.com/wp-content/uploads/legal/How_to_guides/How_to_unsubscribe.pdf";
 
     // Already have an account
-    public String appUrl = "https://ready.fortrade.com/";
+    public String appUrl ="https://authfe.fortrade.com/oauth/account/login?appId=41fedbf7-2f03-4aac-8d1d-e11cdbb22bf8"; //"https://ready.fortrade.com/";
 
     protected String fbURL = "https://www.facebook.com/";
 

@@ -104,7 +104,7 @@ public class FortradeRPage extends BasePage {
             "Your first name must be different from your last name"};
 
     // Already have an account link
-    public String proAppUrl = "https://pro.fortrade.com/";
+    public String proAppUrl ="https://authfe.fortrade.com/oauth/account/login?appId=1bad62c5-1460-4369-b58f-fb9aa10ab7b8"; //"https://pro.fortrade.com/";
 
     // Financial Services Commission, Mauritius (FSC) link
     public String fscURL = "https://opr.fscmauritius.org/ords/opr/r/fsc-opr/fsc-online-public-register-opr";
