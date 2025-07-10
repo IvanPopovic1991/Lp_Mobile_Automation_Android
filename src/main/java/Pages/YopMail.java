@@ -63,7 +63,7 @@ public class YopMail {
     @FindBy(xpath = "//td[contains(text(),'KapitalRS')][1]")
     public WebElement emailMessageKRS;
 
-    @FindBy(xpath = "//div[contains(text(),'Welcome to Fortrade')]")
+    @FindBy(xpath = "//div[contains(text(),'Your Fortrade Demo Account Is Ready – Let’s GetStarted')]")
     public WebElement emailTitle;
 
     @FindBy(xpath = "//div[contains(text(),'Čestitamo! Uspešno ste otvorili demo račun za trgo...')]")

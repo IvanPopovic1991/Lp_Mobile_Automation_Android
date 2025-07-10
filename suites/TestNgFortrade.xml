@@ -5,29 +5,31 @@
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
     </listeners>
-    <test name="Fortrade day trading woman 2 2025 dlp page - test cases - FSC regulation">
+    <test name="Fortrade commodities dlp page - test cases - FSC regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=2051&amp;regulation=FSC"/>
         <parameter name="countryCode" value="381"/>
         <parameter name="regulation" value="FSC"/>
         <classes>
-            <class name="TestsFortrade.dayTradingWoman2_2025Dlp">
-                <methods>
+            <class name="TestsFortrade.commoditiesDlp">
+                <methods><!--
                     <exclude name="checkFcaRedirection"/>
                     <exclude name="checkIirocRedirection"/>
                     <exclude name="checkAsicRedirection"/>
                     <exclude name="checkCysecRedirection"/>
                     <exclude name="checkFCAPercentages"/>
-                    <exclude name="checkCysecPercentages"/>
+                    <exclude name="checkCysecPercentages"/>-->
+                    <include name="checkingInvalidFtsQueryInTheCrm"/>
+                    <include name="checkingSavingParameter"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="Fortrade day trading woman 2 2025 dlp page - test cases - FCA regulation">
+    <!--<test name="Fortrade commodities dlp page - test cases - FCA regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=1006453&amp;regulation=FCA"/>
         <parameter name="countryCode" value="44"/>
         <parameter name="regulation" value="FCA"/>
         <classes>
-            <class name="TestsFortrade.dayTradingWoman2_2025Dlp">
+            <class name="TestsFortrade.commoditiesDlp">
                 <methods>
                     <exclude name="checkFscRedirection"/>
                     <exclude name="checkIirocRedirection"/>
@@ -37,50 +39,53 @@
                 </methods>
             </class>
         </classes>
-    </test>
-    <test name="Fortrade day trading woman 2 2025 dlp page - test cases - Iiroc regulation">
+    </test>-->
+    <test name="Fortrade commodities dlp page - test cases - Iiroc regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=9077369&amp;regulation=IIROC"/>
         <parameter name="countryCode" value="1"/>
         <parameter name="regulation" value="iiroc"/>
         <classes>
-            <class name="TestsFortrade.dayTradingWoman2_2025Dlp">
-                <methods>
+            <class name="TestsFortrade.commoditiesDlp">
+                <methods><!--
                     <exclude name="checkFscRedirection"/>
                     <exclude name="checkFcaRedirection"/>
                     <exclude name="checkFCAPercentages"/>
                     <exclude name="checkAsicRedirection"/>
                     <exclude name="checkCysecRedirection"/>
-                    <exclude name="checkCysecPercentages"/>
+                    <exclude name="checkCysecPercentages"/>-->
+                    <include name="checkingAnnualParameter"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="Fortrade day trading woman 2 2025 dlp page - test cases - Asic regulation">
+    <test name="Fortrade commodities dlp page - test cases - Asic regulation">
         <parameter name="tag" value="tg=skip&amp;G_GEO=1000142&amp;regulation=ASIC"/>
         <parameter name="countryCode" value="61"/>
         <parameter name="regulation" value="Asic"/>
         <classes>
-            <class name="TestsFortrade.dayTradingWoman2_2025Dlp">
-                <methods>
+            <class name="TestsFortrade.commoditiesDlp">
+                <methods><!--
                     <exclude name="checkFscRedirection"/>
                     <exclude name="checkFcaRedirection"/>
                     <exclude name="checkFCAPercentages"/>
                     <exclude name="checkCysecRedirection"/>
-                    <exclude name="checkCysecPercentages"/>
+                    <exclude name="checkCysecPercentages"/>-->
+                    <include name="checkingAgeParameter"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="Fortrade day trading woman 2 2025 dlp page - test cases - Cysec regulation">
+    <test name="Fortrade commodities dlp page - test cases - Cysec regulation">
         <parameter name="tag" value="?tg=skip&amp;G_GEO=1000997&amp;regulation=CYSEC"/>
         <parameter name="regulation" value="cysec"/>
         <classes>
-            <class name="TestsFortrade.dayTradingWoman2_2025Dlp">
-                <methods>
+            <class name="TestsFortrade.commoditiesDlp">
+                <methods><!--
                     <include name="checkLogoClickability"/>
                     <include name="checkLoginRedirection"/>
                     <include name="checkCysecPercentages"/>
-                    <include name="checkCysecRedirection"/>
+                    <include name="checkCysecRedirection"/>-->
+                    <include name="checkCysecPercentages"/>
                 </methods>
             </class>
         </classes>
