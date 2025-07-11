@@ -38,7 +38,7 @@ public class BaseTest {
         // Set up capabilities
         UiAutomator2Options options = new UiAutomator2Options();
         options.setCapability("platformName", "Android");
-        options.setCapability("deviceName", /*"ZY22F7G98K"*/"inpb95xslj7p9lpb");
+        options.setCapability("deviceName",/*"ZY22F7G98K"*/"inpb95xslj7p9lpb");
         options.setCapability("automationName", "UiAutomator2");
         options.setCapability("noReset", true);
         options.setCapability("appium:browserName", "chrome");
