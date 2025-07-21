@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +96,11 @@ public class FortradeRPage extends BasePage {
 
     private String expTextForPopUp = "Invalid email. Please try another or proceed to log in. If needed, reset your password in case it's forgotten.";
 
+    public By facebookLinkBy = By.xpath("//a[@href='https://www.facebook.com/Fortrade.International']");
+
+    public By instagramLinkBy = By.xpath("//a[@href='https://www.instagram.com/fortrade_online_trading/?hl=en']");
+
+    public By youtubeLinkBy = By.xpath("//a[@href='https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg']");
 
     String[] errorMessages = {"Please enter all your given first name(s)",
             "Please enter your last name in alphabetic characters",
@@ -470,5 +477,21 @@ public class FortradeRPage extends BasePage {
         selectKnowledge(knowledgeData);
         selectKnowledge(knowledgeDataSelect);
         clickContinueBtn();
+    }
+
+    public void clickOnSelectedLink(By element, String url, String document) throws IOException, AWTException, InterruptedException {
+        WebElement displayedElement = returnDisplayedElement(element);
+        if (displayedElement != null) {
+            clickElement(displayedElement, "link " + displayedElement.getText());
+        } else {
+            System.out.println("Element is not found!");
+        }
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+        assertUrl(url);
+        Thread.sleep(2000);
+        takeScreenshot(document + " document - FortradeR");
+        driver.close();
+        driver.switchTo().window(tabs.get(0));
     }
 }
