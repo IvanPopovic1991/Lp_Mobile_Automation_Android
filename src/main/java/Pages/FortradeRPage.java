@@ -34,7 +34,7 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='phoneWrapper']//input[@placeholder='Phone']")
     protected WebElement phoneNumber;
 
-    @FindBy(xpath = /*"//div[@name='Send']"*/"//input[@name='Send']")
+    @FindBy(xpath = "//div[@name='Send']"/*"//input[@name='Send']"*/)
     protected WebElement submitButton;
 
     @FindBy(xpath = "//div[@class='userExistsLabelInner']")
@@ -64,7 +64,7 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-PreferredLanguage lcFieldWrapper']//select")
     protected WebElement pLang;
 
-    @FindBy(xpath = /*"//div[@name='ContinueBtn']"*/"//input[@class='ContinueBtn-Submit']")
+    @FindBy(xpath = "//div[@name='ContinueBtn']"/*"//input[@class='ContinueBtn-Submit']"*/)
     protected WebElement continueBtn;
 
     @FindBy(xpath = "//input[@id='Details-Edit-Btn']")
