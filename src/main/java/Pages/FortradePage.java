@@ -3,12 +3,16 @@ package Pages;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.awt.*;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,16 +46,16 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "//input[@id='Phone']")
     protected WebElement phoneNumber;
 
-    @FindBy(xpath = /*"//div[@name='Send']"*/"//input[@name='Send']")
+    @FindBy(xpath = "//div[@name='Send']"/*"//input[@name='Send']"*/)
     protected WebElement submitButton;
 
-    @FindBy(xpath = /*"//div[@name='SendTermsAgreementAsic']"*/"//input[@name='SendTermsAgreementAsic']")
+    @FindBy(xpath = "//div[@name='SendTermsAgreementAsic']"/*"//input[@name='SendTermsAgreementAsic']"*/)
     protected WebElement submitBtnAsic;
 
     @FindBy(xpath = "//button[@id='CybotCookiebotDialogBodyButtonDecline']")
     protected WebElement denyBtn;
 
-    @FindBy(xpath = /*"//div[@name='ContinueBtn']"*/"//input[@class='ContinueBtn-Submit']")
+    @FindBy(xpath = "//div[@name='ContinueBtn']"/*"//input[@class='ContinueBtn-Submit']"*/)
     protected WebElement continueBtn;
 
     @FindBy(xpath = "//div[@data-cmd='menu']")
@@ -131,12 +135,11 @@ public class FortradePage extends BasePage {
 
     @FindBy(xpath = "//input[@id='Details-Edit-Btn']")
     public WebElement penBtn;
+    public By facebookLinkBy = By.xpath("//a[@class='facebook-links']");
 
-    protected By facebookLinkBy = By.xpath("//a[@class='facebook-links']");
+    public By instagramLinkBy = By.xpath("//a[@href='https://www.instagram.com/fortrade_online_trading/?hl=en']");
 
-    protected By instagramLinkBy = By.xpath("//a[@href='https://www.instagram.com/fortrade_online_trading/?hl=en']");
-
-    protected By youtubeLinkBy = By.xpath("//a[@href='https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg']");
+    public By youtubeLinkBy = By.xpath("//a[@href='https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg']");
 
     By dynamicPercentagesBy = By.xpath("//div[@class='rwLong']//strong[contains(text(), '% of retail investor accounts lose money when trading CFDs with this provider.')]");
   
@@ -159,9 +162,9 @@ public class FortradePage extends BasePage {
 
     protected String fbURL = "https://www.facebook.com/";
 
-    protected String insURL = "https://www.instagram.com/fortrade_online_trading/?hl=en";
+    public String insURL = "https://www.instagram.com/fortrade_online_trading/?hl=en";
 
-    protected String ytURL = "https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg";
+    public String ytURL = "https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg";
 
     // Financial Conduct Authority (FCA) link
     public String fcaURL = "https://register.fca.org.uk/s/firm?id=001b000000NMdUwAAL";
@@ -587,4 +590,55 @@ public class FortradePage extends BasePage {
         selectKnowledge(knowledgeDataSelect);
         clickContinueBtn();
     }
+
+    public void clickFacebookLink() {
+        clickElement(fscRegulationLink, "clicked on Facebook link");
+        switchToNewWindow();
+    }
+
+    public String fbPage(String regulation) {
+        String text = "";
+        switch (regulation) {
+            case ("FSC"): {
+                text = "Fortrade.International";
+            }
+            break;
+            case ("FCA"): {
+                text = "Fortrade.UK/";
+            }
+            break;
+            case ("Asic"): {
+                text = "Fortrade.AU";
+            }
+            break;
+            case ("iiroc"): {
+                text = "Fortrade.International";
+            }
+            break;
+            case ("cysec"): {
+                text = "Fortrade.EU";
+            }
+            break;
+        }
+        String fbURL = "https://www.facebook.com/" + text;
+        return fbURL;
+    }
+
+    public void clickOnSelectedLink(By element, String url, String document, String regulation) throws IOException, AWTException, InterruptedException {
+        WebElement displayedElement = returnDisplayedElement(element);
+        if (displayedElement != null) {
+            clickElement(displayedElement, "link " + displayedElement.getText());
+        } else {
+            System.out.println("Element is not found!");
+        }
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+        assertUrl(url);
+        Thread.sleep(2000);
+        takeScreenshot(document + " document - " + regulation + " regulation");
+        System.out.println("This is the title of the page: " + driver.getTitle());
+        driver.close();
+        driver.switchTo().window(tabs.get(0));
+    }
+
 }

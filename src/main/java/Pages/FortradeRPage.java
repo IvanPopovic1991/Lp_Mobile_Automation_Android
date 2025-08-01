@@ -1,13 +1,15 @@
 package Pages;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.awt.*;
+import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='phoneWrapper']//input[@placeholder='Phone']")
     protected WebElement phoneNumber;
 
-    @FindBy(xpath = /*"//div[@name='Send']"*/"//input[@name='Send']")
+    @FindBy(xpath = "//div[@name='Send']"/*"//input[@name='Send']"*/)
     protected WebElement submitButton;
 
     @FindBy(xpath = "//div[@class='userExistsLabelInner']")
@@ -62,7 +64,7 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-PreferredLanguage lcFieldWrapper']//select")
     protected WebElement pLang;
 
-    @FindBy(xpath = /*"//div[@name='ContinueBtn']"*/"//input[@class='ContinueBtn-Submit']")
+    @FindBy(xpath = "//div[@name='ContinueBtn']"/*"//input[@class='ContinueBtn-Submit']"*/)
     protected WebElement continueBtn;
 
     @FindBy(xpath = "//input[@id='Details-Edit-Btn']")
@@ -94,6 +96,11 @@ public class FortradeRPage extends BasePage {
 
     private String expTextForPopUp = "Invalid email. Please try another or proceed to log in. If needed, reset your password in case it's forgotten.";
 
+    public By facebookLinkBy = By.xpath("//a[@href='https://www.facebook.com/Fortrade.International']");
+
+    public By instagramLinkBy = By.xpath("//a[@href='https://www.instagram.com/fortrade_online_trading/?hl=en']");
+
+    public By youtubeLinkBy = By.xpath("//a[@href='https://www.youtube.com/channel/UCNCrGhrDTEN1Hx_20-kFxwg']");
 
     String[] errorMessages = {"Please enter all your given first name(s)",
             "Please enter your last name in alphabetic characters",
@@ -471,4 +478,57 @@ public class FortradeRPage extends BasePage {
         selectKnowledge(knowledgeDataSelect);
         clickContinueBtn();
     }
+
+    public void clickOnSelectedLink(By element, String url, String document) throws IOException, AWTException, InterruptedException {
+        WebElement displayedElement = returnDisplayedElement(element);
+        if (displayedElement != null) {
+            clickElement(displayedElement, "link " + displayedElement.getText());
+        } else {
+            System.out.println("Element is not found!");
+        }
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+        assertUrl(url);
+        Thread.sleep(2000);
+        takeScreenshot(document + " document - FortradeR");
+        driver.close();
+        driver.switchTo().window(tabs.get(0));
+    }
+
+    public boolean isTextVisibleAnywhereIgnoreCase(String text) {
+        String lower = text.toLowerCase();
+
+        // Find all elements that contain the text (case-insensitive)
+        List<WebElement> elements = driver.findElements(
+                By.xpath("//*[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '" + lower + "')]")
+        );
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        for (WebElement el : elements) {
+            try {
+                // Make sure the element really contains the text (not just a partial DOM match)
+                if (!el.getText().toLowerCase().contains(lower)) continue;
+
+                // Check visibility of element and all its parent elements
+                boolean visible = (Boolean) js.executeScript(
+                        "while (arguments[0]) {" +
+                                "  const s = window.getComputedStyle(arguments[0]);" +
+                                "  if (s.display === 'none' || s.visibility === 'hidden' || s.opacity === '0') return false;" +
+                                "  arguments[0] = arguments[0].parentElement;" +
+                                "} return true;", el
+                );
+
+                // Also make sure the element has size and is displayed
+                if (visible && el.isDisplayed() && el.getSize().height > 0 && el.getSize().width > 0) {
+                    return true;
+                }
+            } catch (StaleElementReferenceException e) {
+                // Element became detached, skip it
+            }
+        }
+
+        return false;
+    }
+
 }
