@@ -463,7 +463,7 @@ public class BitcoinDlp extends BaseTest {
     @Test
     @Parameters({"tag", "regulation"})
     public void checkFCAPercentages(String tag, String regulation) throws IOException {
-        fortradePage.checkPercentages("71% of retail investor accounts lose money when trading CFDs with this provider.");
+        fortradePage.checkPercentages("70% of retail investor accounts lose money when trading CFDs with this provider.");
         try {
             Thread.sleep(500);
         } catch (Exception e){

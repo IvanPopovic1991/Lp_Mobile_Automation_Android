@@ -34,7 +34,7 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='phoneWrapper']//input[@placeholder='Phone']")
     protected WebElement phoneNumber;
 
-    @FindBy(xpath = "//div[@name='Send']"/*"//input[@name='Send']"*/)
+    @FindBy(xpath = "//div[@class='button2']"/*"//input[@name='Send']"*/)
     protected WebElement submitButton;
 
     @FindBy(xpath = "//div[@class='userExistsLabelInner']")
@@ -46,7 +46,7 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//header//div[@class='logo']")
     protected WebElement fortradeRLogo;
 
-    @FindBy(xpath = "//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]")
+    @FindBy(xpath = "(//a[@class='stockLPTag' and contains(@href, 'https://ready.fortrade.com/?lang')])[2]"/*"//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"*/)
     public WebElement alrHaveAccount;
 
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-Age lcFieldWrapper']//select")
@@ -64,7 +64,7 @@ public class FortradeRPage extends BasePage {
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-PreferredLanguage lcFieldWrapper']//select")
     protected WebElement pLang;
 
-    @FindBy(xpath = "//div[@name='ContinueBtn']"/*"//input[@class='ContinueBtn-Submit']"*/)
+    @FindBy(xpath = "//div[@class='button6']"/*"//input[@class='ContinueBtn-Submit']"*/)
     protected WebElement continueBtn;
 
     @FindBy(xpath = "//input[@id='Details-Edit-Btn']")
@@ -442,7 +442,7 @@ public class FortradeRPage extends BasePage {
     }
 
     public void clickAlrHaveAnAcc(){
-        scrollToElementBy(By.xpath("//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"));
+        scrollToElementBy(By.xpath("(//a[@class='stockLPTag' and contains(@href, 'https://ready.fortrade.com/?lang')])[2]"));
         clickElement(alrHaveAccount,"An already have an account? link");
     }
 

@@ -46,16 +46,16 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "//input[@id='Phone']")
     protected WebElement phoneNumber;
 
-    @FindBy(xpath = "//div[@name='Send']"/*"//input[@name='Send']"*/)
+    @FindBy(xpath = "//div[@class='button2']"/*"//input[@name='Send']"*/)
     protected WebElement submitButton;
 
-    @FindBy(xpath = "//div[@name='SendTermsAgreementAsic']"/*"//input[@name='SendTermsAgreementAsic']"*/)
+    @FindBy(xpath = "//div[@class='button3']"/*"//input[@name='SendTermsAgreementAsic']"*/)
     protected WebElement submitBtnAsic;
 
     @FindBy(xpath = "//button[@id='CybotCookiebotDialogBodyButtonDecline']")
     protected WebElement denyBtn;
 
-    @FindBy(xpath = "//div[@name='ContinueBtn']"/*"//input[@class='ContinueBtn-Submit']"*/)
+    @FindBy(xpath = "//div[@class='button6']"/*"//input[@class='ContinueBtn-Submit']"*/)
     protected WebElement continueBtn;
 
     @FindBy(xpath = "//div[@data-cmd='menu']")
@@ -76,7 +76,7 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "(//div[@class='errorValidationIn'])[last()]")
     public WebElement countryCodeErrorMessage;
 
-    @FindBy(xpath = "//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]")
+    @FindBy(xpath = "(//div[@class='alreadyHaveAcc']//a[contains(text(), 'Already have an account?')])[2]"/*"//div[@class='needHelpDiv']//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"*/)
     public WebElement alrHaveAccount;
 
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-Age lcFieldWrapper']//select")
@@ -135,7 +135,7 @@ public class FortradePage extends BasePage {
 
     @FindBy(xpath = "//input[@id='Details-Edit-Btn']")
     public WebElement penBtn;
-    public By facebookLinkBy = By.xpath("//a[@class='facebook-links']");
+    public By facebookLinkBy = By.xpath("//a/img[@alt='facebook']");
 
     public By instagramLinkBy = By.xpath("//a[@href='https://www.instagram.com/fortrade_online_trading/?hl=en']");
 
@@ -553,7 +553,7 @@ public class FortradePage extends BasePage {
     }
 
     public void clickAlrHaveAnAcc(){
-        scrollToElementBy(By.xpath("//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"));
+        scrollToElementBy(By.xpath("(//div[@class='alreadyHaveAcc']//a[contains(text(), 'Already have an account?')])[2]"/*"//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"*/));
         clickElement(alrHaveAccount,"An already have an account? link");
     }
   
