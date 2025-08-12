@@ -5,13 +5,9 @@
         <listener class-name="Listeners.ScreenshotListener"/>
         <listener class-name="Listeners.Transform"/>
     </listeners>
-    <test name="FortradeR all blue dlp page - test cases">
+    <test name="FortradeR commodities 2 dark new long ai dlp page - test cases">
         <classes>
-            <class name="TestsFortradeR.AllBlueDlp">
-                <methods>
-                    <include name="checkLoginRedirection"/>
-                </methods>
-            </class>
+            <class name="TestsFortradeR.commodities2AiDlp"/>
         </classes>
     </test>
 </suite>

@@ -31,6 +31,9 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "//div[contains(@class,'logo cysecClass')]")
     protected WebElement logoCysec;
 
+    @FindBy(xpath = "//div[@class='nav-button']")
+    public WebElement startTradingBtn;
+
     @FindBy(xpath = "//input[@id='FirstName']")
     protected WebElement firstName;
 
@@ -46,16 +49,16 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "//input[@id='Phone']")
     protected WebElement phoneNumber;
 
-    @FindBy(xpath = "//div[@class='button2']"/*"//input[@name='Send']"*/)
+    @FindBy(xpath = /*"//div[@class='button2']"*/"//input[@name='Send']")
     protected WebElement submitButton;
 
-    @FindBy(xpath = "//div[@class='button3']"/*"//input[@name='SendTermsAgreementAsic']"*/)
+    @FindBy(xpath = /*"//div[@class='button3']"*/"//input[@name='SendTermsAgreementAsic']")
     protected WebElement submitBtnAsic;
 
     @FindBy(xpath = "//button[@id='CybotCookiebotDialogBodyButtonDecline']")
     protected WebElement denyBtn;
 
-    @FindBy(xpath = "//div[@class='button6']"/*"//input[@class='ContinueBtn-Submit']"*/)
+    @FindBy(xpath = /*"//div[@class='button6']"*/"//input[@class='ContinueBtn-Submit']")
     protected WebElement continueBtn;
 
     @FindBy(xpath = "//div[@data-cmd='menu']")
@@ -76,7 +79,7 @@ public class FortradePage extends BasePage {
     @FindBy(xpath = "(//div[@class='errorValidationIn'])[last()]")
     public WebElement countryCodeErrorMessage;
 
-    @FindBy(xpath = "(//div[@class='alreadyHaveAcc']//a[contains(text(), 'Already have an account?')])[2]"/*"//div[@class='needHelpDiv']//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"*/)
+    @FindBy(xpath = /*"(//div[@class='alreadyHaveAcc']//a[contains(text(), 'Already have an account?')])[2]"*/"//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]")
     public WebElement alrHaveAccount;
 
     @FindBy(xpath = "//div[@class='LcWidgetTopWrapper ClField-Age lcFieldWrapper']//select")
@@ -135,6 +138,7 @@ public class FortradePage extends BasePage {
 
     @FindBy(xpath = "//input[@id='Details-Edit-Btn']")
     public WebElement penBtn;
+
     public By facebookLinkBy = By.xpath("//a/img[@alt='facebook']");
 
     public By instagramLinkBy = By.xpath("//a[@href='https://www.instagram.com/fortrade_online_trading/?hl=en']");
@@ -189,6 +193,10 @@ public class FortradePage extends BasePage {
 
     // Asic regulation - target market determination document link
     protected String tmdDeterminationLink = "https://www.fortrade.com/wp-content/uploads/legal/ASIC/Fort_Securities_AU-TMD_Policy.pdf";
+
+    public void clickStartTradingBtn(){
+        clickElement(startTradingBtn,"Start Trading button");
+    }
 
     public void enterFirstName(String firstNameData) {
         typeText(firstName, firstNameData, "first name");
@@ -553,7 +561,7 @@ public class FortradePage extends BasePage {
     }
 
     public void clickAlrHaveAnAcc(){
-        scrollToElementBy(By.xpath("(//div[@class='alreadyHaveAcc']//a[contains(text(), 'Already have an account?')])[2]"/*"//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"*/));
+        scrollToElementBy(By.xpath(/*"(//div[@class='alreadyHaveAcc']//a[contains(text(), 'Already have an account?')])[2]"*/"//div[@class='alreadyHaveAcc']//a[contains(text(),'Already have an account?')]"));
         clickElement(alrHaveAccount,"An already have an account? link");
     }
   
@@ -562,6 +570,7 @@ public class FortradePage extends BasePage {
         scrollToElementBy(staticPercentagesBy);
         Assert.assertEquals(getText(returnDisplayedElement(staticPercentagesBy), "staticPercentages"), textForPercentages);
     }
+
     public void secondStepErrorMessage(int numberOfParameters) throws InterruptedException {
         Thread.sleep(2000);
         for (int i = 1; i <= numberOfParameters; i++) {
